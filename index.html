@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Her Story Through Time</title>
+<meta name="description" content="How women's lives changed from 1850 to today in the United Kingdom, the United States, Russia, Turkey and China: rights, work, school, marriage and clothes.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Figtree:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<!--BODY-->
+<header class="hero wrap">
+  <p class="eyebrow">1850 → today · 5 countries · 8 moments in time</p>
+  <h1>Her Story Through Time</h1>
+  <p class="lede">What was life like for a woman in 1850? Could she vote, go to university, run a business or choose who to marry? Pick a year, travel through time, and compare the United Kingdom, the United States, Russia, Turkey and China.</p>
+</header>
+
+<nav class="timebar" aria-label="Choose a year">
+  <div class="wrap timebar-inner">
+    <button class="nav-btn" id="prev" type="button" aria-label="Previous year">‹</button>
+    <ol class="ruler" id="ruler"></ol>
+    <button class="nav-btn" id="next" type="button" aria-label="Next year">›</button>
+    <button class="play-btn" id="play" type="button" aria-pressed="false">▶ Play</button>
+  </div>
+</nav>
+
+<main class="wrap">
+  <section class="era-head" aria-live="polite">
+    <p class="era-year" id="eraYear">1850</p>
+    <p class="era-context" id="eraContext"></p>
+  </section>
+
+  <div class="view-switch" role="tablist" aria-label="How to explore">
+    <button role="tab" id="tab-compare" aria-selected="true" type="button">Compare countries</button>
+    <button role="tab" id="tab-journey" aria-selected="false" type="button">Follow one country</button>
+    <div class="country-pick" id="countryPick" hidden></div>
+  </div>
+
+  <section class="cards" id="cards" aria-label="Women's lives"></section>
+
+  <section class="panel" id="scoreboard">
+    <div class="panel-head">
+      <h2>Rights scoreboard</h2>
+      <p>Each square is one country in one year. Click a square to jump there.</p>
+    </div>
+    <div class="right-tabs" id="rightTabs" role="tablist" aria-label="Choose a right"></div>
+    <div class="table-scroll"><table class="heat" id="heat"></table></div>
+    <ul class="key">
+      <li><span class="lvl lvl-2">✓</span> Yes</li>
+      <li><span class="lvl lvl-1">½</span> Partly, or only some women</li>
+      <li><span class="lvl lvl-0">✕</span> No</li>
+    </ul>
+  </section>
+
+  <section class="panel" id="marriage">
+    <div class="panel-head">
+      <h2>How old were brides?</h2>
+      <p>Usual age of women at their first marriage. Before 1900 the numbers are historians' estimates, and girls in villages often married younger than in towns.</p>
+    </div>
+    <div class="legend" id="legend"></div>
+    <div class="chart-wrap" id="chart"></div>
+  </section>
+
+  <section class="panel" id="votes">
+    <div class="panel-head">
+      <h2>When did women win the vote?</h2>
+      <p>The first dot is when some women could vote in national elections; the line runs to when every woman could vote on the same terms as men.</p>
+    </div>
+    <div class="vote-line" id="voteLine"></div>
+  </section>
+
+  <section class="panel sources">
+    <h2>About this project</h2>
+    <p>This is an educational overview for young readers, so it simplifies. Life was very different for rich and poor women, in cities and villages, and for women of different religions and ethnic groups in the same country. The rights scores describe what the law allowed for most women in that year.</p>
+    <p>Marriage ages are rounded. Recent figures come from national statistics offices (UK Office for National Statistics, US Census Bureau, Rosstat, TurkStat and China's census); earlier figures are estimates from historical studies of census and church records.</p>
+  </section>
+</main>
+
+<footer class="wrap foot">
+  <p>Made for curious girls everywhere. Use ← and → on your keyboard to travel through time.</p>
+</footer>
+<!--/BODY-->
+<script src="js/data.js"></script>
+<script src="js/figure.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
