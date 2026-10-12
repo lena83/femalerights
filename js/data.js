@@ -642,3 +642,65 @@ const EXTRA = {
   }
 };
 for (const c in EXTRA) for (const y in EXTRA[c]) Object.assign(DATA[c][y], EXTRA[c][y]);
+
+// ---------- Working or at home? ----------
+// work: approx. % of working-age women counted as working (a paid job, or work
+// counted by the census on a family farm or business). null = no reliable figure.
+// Old censuses often missed farm wives and women helping in family shops,
+// so early numbers are too low rather than too high.
+const WORKFORCE = {
+  uk: {
+    1850: [35, "Mostly servants, mill workers and dressmakers. Middle-class wives were expected to stay at home."],
+    1880: [34, "A 'respectable' wife stayed home. Many poorer wives took in washing or sewing, which censuses rarely counted."],
+    1900: [32, "Most women stopped working when they married. Only about 1 in 10 wives had a recorded job."],
+    1925: [34, "Many young single women worked in offices and shops, then left at marriage."],
+    1945: [45, "During the war, women were called up for war work, and many more had jobs than ever before."],
+    1965: [47, "More married women were going back to work, often part time once their children were at school."],
+    1990: [66, "Two in three women of working age had a job, many of them part time."],
+    2025: [75, "Three in four women of working age work, almost as many as men."]
+  },
+  usa: {
+    1850: [15, "Most women worked hard on family farms, but censuses didn't count that. Enslaved women were forced to work and were not counted either."],
+    1880: [15, "Paid work was mostly for young single women, widows and poorer families."],
+    1900: [21, "About 1 in 5 women had a paid job, but only about 1 in 20 married white women did. Black women were far more likely to work for wages."],
+    1925: [24, "Young single women worked in offices and shops. Most left when they married."],
+    1945: [37, "War work drew millions of women into jobs. Many were pushed out again when the war ended."],
+    1965: [44, "Many married women returned to work once their children were older."],
+    1990: [67, "Two-paycheck families became normal."],
+    2025: [69, "About 7 in 10 women of working age have or are looking for a job."]
+  },
+  russia: {
+    1850: [null, "Almost every peasant woman worked on the family farm and spun and wove at home, but there are no counts of this work."],
+    1880: [null, "Nearly all village women did farm work. Only a small number worked for wages in factories or as servants."],
+    1900: [null, "Women did most of the farm work, and about 1 in 4 factory workers was a woman, but there is no reliable overall figure."],
+    1925: [null, "Women were encouraged to work, but jobs were scarce, so many were unemployed in the early 1920s."],
+    1945: [null, "With millions of men at war, women made up more than half of all workers."],
+    1965: [80, "Almost every woman worked full time. Staying at home was rare and often frowned on."],
+    1990: [80, "Most women worked full time and still did nearly all the housework."],
+    2025: [70, "About 7 in 10 women of working age have a job."]
+  },
+  turkey: {
+    1850: [null, "Village women worked in the fields and wove at home. City women from well-off families rarely worked outside the home."],
+    1880: [null, "Most women worked on family farms. No one counted it as a job."],
+    1900: [null, "Women worked on farms, in carpet workshops and in silk mills, but there are no reliable totals."],
+    1925: [null, "Most women still worked on family farms. Few had paid jobs in towns."],
+    1945: [null, "The large majority of working women were unpaid helpers on family farms."],
+    1965: [55, "This number is high because the census counted women working unpaid on family farms."],
+    1990: [36, "As families moved from villages to cities, many women stopped farm work and stayed at home."],
+    2025: [38, "Only about 4 in 10 women of working age are in the workforce, one of the lowest shares in Europe."]
+  },
+  china: {
+    1850: [null, "Women spun, wove and raised silkworms at home, and in the south many worked in the fields, but nobody counted it."],
+    1880: [null, "Women's work at home helped feed the family, but there are no figures."],
+    1900: [null, "Girls began working in city silk and cotton mills, but most women worked at home or on the farm."],
+    1925: [null, "In Shanghai, about two in three cotton-mill workers were women, but there are no national figures."],
+    1945: [null, "War disrupted everything, and there are no reliable figures."],
+    1965: [70, "In the communes almost every woman worked in the fields, and city women were assigned jobs by the state."],
+    1990: [80, "Most women worked, in fields, factories and offices."],
+    2025: [68, "Fewer women work than in 1990, partly because more young women are studying and some cities have fewer jobs for women."]
+  }
+};
+for (const c in WORKFORCE) for (const y in WORKFORCE[c]) {
+  DATA[c][y].work = WORKFORCE[c][y][0];
+  DATA[c][y].workNote = WORKFORCE[c][y][1];
+}

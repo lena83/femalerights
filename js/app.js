@@ -96,6 +96,14 @@
           <p>${cell.school}</p>
         </section>
         <section class="fact">
+          <h4>Working or at home?</h4>
+          ${cell.work == null
+            ? `<p class="pay-none">No reliable figure</p>`
+            : `<div class="tenths" aria-hidden="true">${tenIcons(cell.work)}</div>
+          <p class="pay-line">About <b>${Math.round(cell.work / 10)} in 10</b> women were working (${cell.work}%)</p>`}
+          <p class="muted">${cell.workNote}</p>
+        </section>
+        <section class="fact">
           <h4>Common jobs and businesses</h4>
           <ul class="chips">${cell.jobs.map((j) => `<li>${j}</li>`).join("")}</ul>
         </section>
@@ -118,6 +126,15 @@
     for (let i = 0; i < Math.ceil(n - 0.01); i++) {
       const part = Math.min(1, n - i);
       out += `<svg viewBox="0 0 16 22" class="kid" style="--f:${(part * 100).toFixed(0)}%"><circle cx="8" cy="5" r="4"/><path d="M2,21 C2,12 4,10 8,10 C12,10 14,12 14,21 Z"/></svg>`;
+    }
+    return out;
+  }
+
+  function tenIcons(pct) {
+    const n = Math.round(pct / 10);
+    let out = "";
+    for (let i = 0; i < 10; i++) {
+      out += `<svg viewBox="0 0 16 22" class="ten${i < n ? " on" : ""}"><circle cx="8" cy="5" r="4"/><path d="M2,21 C2,12 4,10 8,10 C12,10 14,12 14,21 Z"/></svg>`;
     }
     return out;
   }
@@ -170,6 +187,8 @@
             note: "The average number of children a woman had in her lifetime. In the past many babies also died young, so families were often smaller than this number suggests." },
     read: { tab: "Women who could read", min: 0, max: 100, step: 20, fmt: (v) => v + "%",
             note: "Share of adult women who could read and write. Early figures are estimates from marriage registers and censuses." },
+    work: { tab: "Women in the workforce", min: 0, max: 100, step: 20, fmt: (v) => v + "%",
+            note: "Share of working-age women counted as working, in a job or on a family farm or business. Old censuses missed a lot of women's work on farms and at home, and gaps mean there is no reliable figure." },
     pay:  { tab: "Pay compared with men", min: 30, max: 100, step: 10, fmt: (v) => String(v),
             note: "For every 100 a man earned, how much a woman earned. Gaps in a line mean there is no reliable figure, often because most women worked on family farms without a wage." }
   };
