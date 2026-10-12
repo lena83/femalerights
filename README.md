@@ -12,7 +12,7 @@ For each country and each of 8 moments in time (1850, 1880, 1900, 1925, 1945, 19
 - the usual **age at first marriage** and the average **number of children**
 - **pay compared with men's** (how much a woman earned for every 100 a man earned)
 - a note on **running a business** and on **divorce**
-- **could she be a writer, artist, doctor or surgeon?** plus a "Did you know?" fact
+- **could she be a writer, artist, doctor, surgeon, scientist or pilot?** plus a "Did you know?" fact
 - a short story of the era, plus a **"Woman to know"** role model
 
 There are also overview visuals: a rights scoreboard (heatmap) where each square explains its rating, a line chart that switches between marriage age, children per woman, reading, women in the workforce and pay, and a timeline of when women won the vote.

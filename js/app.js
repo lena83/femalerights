@@ -94,6 +94,7 @@
           <h4>Could she be a…?</h4>
           <ul class="careers">${CAREERS.map((k) => {
             const v = cell.careers[k.key];
+            if (v == null) return `<li class="pill-none"><span>${k.label}</span><b>No planes yet</b></li>`;
             return `<li class="pill-${v}"><span>${k.label}</span><b>${v === 1 ? "" : SYMBOL[v] + " "}${CAREER_LEVELS[v]}</b></li>`;
           }).join("")}</ul>
           <p class="did"><span class="did-label">Did you know?</span> ${cell.fact}</p>

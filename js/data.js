@@ -969,3 +969,18 @@ const REASONS = {
     china1945: "Universities were open to women, but war and poverty meant very few could go."
   }
 };
+
+// ---------- More careers: scientist and pilot ----------
+// [scientist, pilot]: 0 = No, 1 = Rarely, 2 = Yes, null = no aeroplanes yet (first flight 1903)
+const MORE_CAREERS = {
+  uk:     { 1850: [1, null], 1880: [1, null], 1900: [1, null], 1925: [1, 1], 1945: [2, 1], 1965: [2, 1], 1990: [2, 2], 2025: [2, 2] },
+  usa:    { 1850: [1, null], 1880: [1, null], 1900: [1, null], 1925: [1, 1], 1945: [1, 1], 1965: [1, 1], 1990: [2, 1], 2025: [2, 2] },
+  russia: { 1850: [0, null], 1880: [1, null], 1900: [1, null], 1925: [2, 1], 1945: [2, 2], 1965: [2, 1], 1990: [2, 1], 2025: [2, 2] },
+  turkey: { 1850: [0, null], 1880: [0, null], 1900: [0, null], 1925: [1, 0], 1945: [1, 1], 1965: [2, 1], 1990: [2, 1], 2025: [2, 2] },
+  china:  { 1850: [0, null], 1880: [0, null], 1900: [0, null], 1925: [1, 0], 1945: [1, 1], 1965: [2, 1], 1990: [2, 2], 2025: [2, 2] }
+};
+CAREERS.push({ key: "scientist", label: "Scientist" }, { key: "pilot", label: "Pilot" });
+for (const c in MORE_CAREERS) for (const y in MORE_CAREERS[c]) {
+  DATA[c][y].careers.scientist = MORE_CAREERS[c][y][0];
+  DATA[c][y].careers.pilot = MORE_CAREERS[c][y][1];
+}

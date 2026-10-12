@@ -165,6 +165,7 @@ button { font: inherit; color: inherit; }
 .careers li { display: grid; gap: 1px; border-radius: 8px; padding: 5px 8px; font-size: .8rem; line-height: 1.25; }
 .careers li span { color: var(--ink); font-weight: 600; }
 .careers b { font-size: .74rem; font-weight: 700; }
+.pill-none { background: var(--sunk); color: var(--muted); }
 .did { border-left: 3px solid var(--cc); padding-left: 9px; }
 .did-label { font-weight: 700; }
 .fact { display: grid; gap: 6px; font-size: .86rem; }
