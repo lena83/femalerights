@@ -5,7 +5,7 @@ An interactive, educational web page for young readers. It shows how women's liv
 For each country and each of 8 moments in time (1850, 1880, 1900, 1925, 1945, 1965, 1990, 2025) it shows:
 
 - an illustrated **paper-doll figure** wearing that era's typical clothes, with a short description
-- whether a woman could **vote, own property and keep her money, choose her job, run a business, go to university** (Yes / Partly / No)
+- whether a woman could **vote, own property and keep her money, choose her job, run a business, go to university, ask for a divorce** (Yes / Partly / No)
 - **school and reading**: how girls were educated and what share of women could read
 - **working or at home**: the share of women in the workforce
 - the **most common jobs and businesses** for women

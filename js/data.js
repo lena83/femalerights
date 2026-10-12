@@ -704,3 +704,63 @@ for (const c in WORKFORCE) for (const y in WORKFORCE[c]) {
   DATA[c][y].work = WORKFORCE[c][y][0];
   DATA[c][y].workNote = WORKFORCE[c][y][1];
 }
+
+// ---------- Divorce ----------
+// [level, note]: could a wife ask for a divorce on the same terms as her husband?
+const DIVORCE = {
+  uk: {
+    1850: [0, "Divorce needed a special Act of Parliament. Only a handful of women in history ever managed it."],
+    1880: [1, "Since 1857 courts could grant divorces. A husband only had to prove his wife was unfaithful; a wife had to prove that plus something worse, like cruelty."],
+    1900: [1, "The rules were still unequal, and divorce was very expensive."],
+    1925: [2, "From 1923 wives could divorce on the same grounds as husbands, though it was still costly and seen as shameful."],
+    1945: [2, "Since 1937 a wife could also divorce a husband who had left her or treated her cruelly."],
+    1965: [2, "Divorce was possible, but someone had to be proved 'at fault'."],
+    1990: [2, "Since 1969 a marriage could end if it had 'broken down', even if nobody was at fault."],
+    2025: [2, "Since 2022 either partner can end a marriage without blaming the other."]
+  },
+  usa: {
+    1850: [1, "Each state had its own rules. Some allowed divorce for cruelty or desertion; South Carolina allowed no divorce at all."],
+    1880: [1, "By now wives asked for most divorces, usually because of desertion or cruelty, but rules varied by state."],
+    1900: [1, "Some states made divorce hard, so some people moved to states like Nevada with easier rules."],
+    1925: [1, "Rules still varied by state, and in South Carolina divorce was banned until 1949."],
+    1945: [1, "Divorce was possible in most states but needed proof that one partner was 'at fault'."],
+    1965: [2, "Wives and husbands had the same rights, but a court had to find someone at fault."],
+    1990: [2, "From 1969, starting in California, 'no-fault' divorce spread to almost every state."],
+    2025: [2, "Either partner can ask for a divorce."]
+  },
+  russia: {
+    1850: [0, "Only the Church could end a marriage, and it almost never did. A wife could not even live apart without her husband's permission."],
+    1880: [0, "Divorce was still almost impossible. A wife needed her husband's permission to get her own passport."],
+    1900: [0, "Church divorce was rare. From 1914 a wife could at least get her own passport and live apart."],
+    1925: [2, "After 1917 either partner could divorce quickly. From 1926 one partner simply had to register it."],
+    1945: [1, "A 1944 law made divorce slow and expensive, with court hearings and a notice in the newspaper."],
+    1965: [2, "From 1965 divorce became simple again."],
+    1990: [2, "Divorce was easy and common."],
+    2025: [2, "Either partner can ask for a divorce. Couples without children can divorce at the registry office."]
+  },
+  turkey: {
+    1850: [1, "A husband could divorce his wife just by saying so. A wife had to go to a judge with a good reason, or give up her marriage gift to be released."],
+    1880: [1, "The rules were the same: easy for husbands, harder for wives."],
+    1900: [1, "In 1917 a new family law would give wives more reasons they could use to ask a court for divorce."],
+    1925: [2, "The 1926 Civil Code gave wives and husbands equal rights to divorce through the courts."],
+    1945: [2, "Wives and husbands had equal rights to divorce."],
+    1965: [2, "Wives and husbands had equal rights to divorce."],
+    1990: [2, "Wives and husbands had equal rights to divorce."],
+    2025: [2, "Either partner can ask for a divorce, and couples can agree to divorce together."]
+  },
+  china: {
+    1850: [0, "A husband could send his wife away for 'seven reasons', including talking too much. A wife could almost never leave."],
+    1880: [0, "A wife had almost no way to end a marriage."],
+    1900: [0, "A wife had almost no way to end a marriage."],
+    1925: [1, "Courts of the new Republic began to let some women divorce, and the 1930 Civil Code made the rules equal."],
+    1945: [1, "The law was equal, but in villages families often stopped women from leaving."],
+    1965: [2, "The 1950 Marriage Law let women ask for divorce, and over a million marriages ended in the next few years."],
+    1990: [2, "Either partner could ask for a divorce."],
+    2025: [2, "Either partner can ask for a divorce. Since 2021 couples must wait 30 days to 'cool off' first."]
+  }
+};
+RIGHTS.push({ key: "divorce", label: "Ask for a divorce" });
+for (const c in DIVORCE) for (const y in DIVORCE[c]) {
+  DATA[c][y].rights.divorce = DIVORCE[c][y][0];
+  DATA[c][y].divorceNote = DIVORCE[c][y][1];
+}

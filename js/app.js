@@ -91,6 +91,10 @@
         </div>
         <div class="kids" aria-hidden="true">${kidIcons(cell.kids)}</div>
         <section class="fact">
+          <h4>Divorce</h4>
+          <p>${cell.divorceNote}</p>
+        </section>
+        <section class="fact">
           <h4>School and reading</h4>
           <span class="meter" aria-hidden="true"><span style="width:${cell.read}%"></span></span>
           <p>${cell.school}</p>
