@@ -224,6 +224,8 @@ button { font: inherit; color: inherit; }
 .chart-wrap .band-label { fill: var(--accent); }
 .chart-wrap .series { fill: none; stroke-width: 2.5; stroke-linejoin: round; stroke-linecap: round; }
 .chart-wrap .pt { stroke: var(--surface); stroke-width: 2; }
+.chart-wrap .nodata-title { font: 600 12px var(--body); fill: var(--ink); }
+.chart-wrap .nodata-label { font: 600 12px var(--body); }
 .chart-wrap .pt-label { font: 700 12px var(--body); }
 
 .vote-line { overflow-x: auto; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 12px; }

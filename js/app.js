@@ -233,7 +233,8 @@
     read: { tab: "Women who could read", min: 0, max: 100, step: 20, fmt: (v) => v + "%",
             note: "Share of adult women who could read and write. Early figures are estimates from marriage registers and censuses." },
     work: { tab: "Women in the workforce", min: 0, max: 100, step: 20, fmt: (v) => v + "%",
-            note: "Share of working-age women counted as working, in a job or on a family farm or business. Old censuses missed a lot of women's work on farms and at home, and gaps mean there is no reliable figure." },
+            note: "Share of working-age women counted as working, in a job or on a family farm or business. A missing line does not mean women didn't work: in villages almost every woman worked on the family farm, but nobody counted it." ,
+            missing: "no reliable count, though most village women worked on family farms" },
     pay:  { tab: "Pay compared with men", min: 30, max: 100, step: 10, fmt: (v) => String(v),
             note: "For every 100 a man earned, how much a woman earned. Gaps in a line mean there is no reliable figure, often because most women worked on family farms without a wage." }
   };
@@ -294,7 +295,32 @@
       const lx = x(sel) + (right ? -20 : 20);
       parts.push(`<text class="pt-label" x="${lx}" y="${l.ty + 4}" text-anchor="${right ? "end" : "start"}" style="fill:var(--c-${l.c.id})">${M.fmt(l.v)}</text>`);
     });
-    $("chart").innerHTML = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Line chart: ${M.tab}, 1850 to 2025, for five countries">${parts.join("")}</svg>`;
+    // Below the axis: a dashed bar for each country over the years with no reliable figure,
+    // so a missing line reads as "no data" rather than "zero".
+    const missing = COUNTRIES.map((c) => {
+      const runs = [];
+      ERAS.forEach((yr, i) => {
+        if (val(c.id, yr) != null) return;
+        const last = runs[runs.length - 1];
+        if (last && last.end === i - 1) last.end = i; else runs.push({ start: i, end: i });
+      });
+      return { c, runs };
+    }).filter((m) => m.runs.length && (!focus || focus === m.c.id));
+    const rowH = 30;
+    let H2 = H;
+    if (missing.length) {
+      parts.push(`<text x="${L}" y="${H + 16}" class="nodata-title">No reliable figures for:</text>`);
+      missing.forEach((m, k) => {
+        const ry = H + 30 + k * rowH;
+        m.runs.forEach((r) => {
+          const x1 = x(ERAS[r.start]), x2 = x(ERAS[r.end]);
+          parts.push(`<line x1="${x1}" x2="${Math.max(x2, x1 + 1)}" y1="${ry + 12}" y2="${ry + 12}" style="stroke:var(--c-${m.c.id})" stroke-width="3" stroke-dasharray="2 6" stroke-linecap="round"/>`);
+          parts.push(`<text x="${x1}" y="${ry + 4}" class="nodata-label" style="fill:var(--c-${m.c.id})">${m.c.name}, ${ERAS[r.start]}${r.end > r.start ? "–" + ERAS[r.end] : ""}${M.missing ? ": " + M.missing : ""}</text>`);
+        });
+      });
+      H2 = H + 30 + missing.length * rowH;
+    }
+    $("chart").innerHTML = `<svg viewBox="0 0 ${W} ${H2}" role="img" aria-label="Line chart: ${M.tab}, 1850 to 2025, for five countries">${parts.join("")}</svg>`;
   }
 
   function buildLegend() {
