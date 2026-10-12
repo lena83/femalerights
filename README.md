@@ -6,10 +6,13 @@ For each country and each of 8 moments in time (1850, 1880, 1900, 1925, 1945, 19
 
 - an illustrated **paper-doll figure** wearing that era's typical clothes, with a short description
 - whether a woman could **vote, own property and keep her money, choose her job, run a business, go to university** (Yes / Partly / No)
-- the usual **age at first marriage**
+- **school and reading**: how girls were educated and what share of women could read
+- the **most common jobs and businesses** for women
+- the usual **age at first marriage** and the average **number of children**
+- **pay compared with men's** (how much a woman earned for every 100 a man earned)
 - a short story of the era, plus a **"Woman to know"** role model
 
-There are also overview visuals: a rights scoreboard (heatmap), a marriage-age line chart, and a timeline of when women won the vote.
+There are also overview visuals: a rights scoreboard (heatmap), a line chart that switches between marriage age, children per woman, reading and pay, and a timeline of when women won the vote.
 
 ## How to open it
 
@@ -29,4 +32,4 @@ To put it online for free, turn on **GitHub Pages** (Settings → Pages → depl
 
 ## A note on accuracy
 
-The content is simplified for children. Rights scores describe what the law allowed most women at that time. Marriage ages are rounded; figures before about 1900 are historians' estimates and differed a lot between towns and villages and between rich and poor families.
+The content is simplified for children. Rights scores describe what the law allowed most women at that time. All numbers are rounded; figures before about 1900 are historians' estimates and differed a lot between towns and villages and between rich and poor families.

@@ -1,9 +1,8 @@
 (function () {
-  const state = { era: 0, view: "compare", country: "uk", right: "vote", timer: null };
+  const state = { era: 0, view: "compare", country: "uk", right: "vote", metric: "age", timer: null };
   const $ = (id) => document.getElementById(id);
   const byId = Object.fromEntries(COUNTRIES.map((c) => [c.id, c]));
   const SYMBOL = ["✕", "½", "✓"];
-  const AGE_MIN = 16, AGE_MAX = 34;
 
   const fmtAge = (n) => (Number.isInteger(n) ? String(n) : n.toFixed(1));
 
@@ -70,7 +69,6 @@
     const journey = state.view === "journey";
     const heading = journey ? year : country.name;
     const sub = journey ? cell.state : (cell.state !== country.name ? cell.state : `In ${year}`);
-    const pct = ((cell.age - AGE_MIN) / (AGE_MAX - AGE_MIN)) * 100;
     const rights = RIGHTS.map((r) => {
       const v = cell.rights[r.key];
       return `<li><span>${r.label}</span><span class="pill pill-${v}"><b aria-hidden="true">${SYMBOL[v]}</b>${LEVELS[v]}</span></li>`;
@@ -86,16 +84,42 @@
         <div>
           <ul class="rights" aria-label="Could a woman…">${rights}</ul>
         </div>
-        <div class="age">
-          <span class="age-num">~${fmtAge(cell.age)}</span>
-          <span class="age-label">usual age of a woman<br>at her first marriage</span>
-          <span class="age-bar" aria-hidden="true"><span style="width:${pct.toFixed(1)}%"></span></span>
-          <span class="age-scale" aria-hidden="true"><span>${AGE_MIN}</span><span>25</span><span>${AGE_MAX}</span></span>
+        <div class="stats">
+          <div class="stat"><span class="stat-num">${fmtAge(cell.age)}</span><span class="stat-label">age at first marriage (usual)</span></div>
+          <div class="stat"><span class="stat-num">${fmtAge(cell.kids)}</span><span class="stat-label">children per woman</span></div>
+          <div class="stat"><span class="stat-num">${cell.read}%</span><span class="stat-label">of women could read</span></div>
         </div>
+        <div class="kids" aria-hidden="true">${kidIcons(cell.kids)}</div>
+        <section class="fact">
+          <h4>School and reading</h4>
+          <span class="meter" aria-hidden="true"><span style="width:${cell.read}%"></span></span>
+          <p>${cell.school}</p>
+        </section>
+        <section class="fact">
+          <h4>Common jobs and businesses</h4>
+          <ul class="chips">${cell.jobs.map((j) => `<li>${j}</li>`).join("")}</ul>
+        </section>
+        <section class="fact">
+          <h4>Pay compared with men</h4>
+          ${cell.pay == null
+            ? `<p class="pay-none">No reliable figure</p>`
+            : `<p class="pay-line">For every <b>100</b> a man earned, she earned about <b>${cell.pay}</b></p>
+          <span class="pay-bars" aria-hidden="true"><span class="pay-man"></span><span class="pay-her" style="width:${cell.pay}%"></span></span>`}
+          <p class="muted">${cell.payNote}</p>
+        </section>
         <p class="note">${cell.note}</p>
         <aside class="star"><span class="star-label">Woman to know</span><strong>${cell.star.name}</strong>${cell.star.text}</aside>
       </div>
     </article>`;
+  }
+
+  function kidIcons(n) {
+    let out = "";
+    for (let i = 0; i < Math.ceil(n - 0.01); i++) {
+      const part = Math.min(1, n - i);
+      out += `<svg viewBox="0 0 16 22" class="kid" style="--f:${(part * 100).toFixed(0)}%"><circle cx="8" cy="5" r="4"/><path d="M2,21 C2,12 4,10 8,10 C12,10 14,12 14,21 Z"/></svg>`;
+    }
+    return out;
   }
 
   function renderCards() {
@@ -139,32 +163,64 @@
   }
 
   // ---------- Marriage-age chart ----------
+  const METRICS = {
+    age:  { tab: "Age at first marriage", min: 16, max: 34, step: 2, fmt: fmtAge,
+            note: "Usual age of women at their first marriage. Before 1900 the numbers are historians' estimates, and girls in villages often married younger than in towns." },
+    kids: { tab: "Children per woman", min: 0, max: 8, step: 1, fmt: fmtAge,
+            note: "The average number of children a woman had in her lifetime. In the past many babies also died young, so families were often smaller than this number suggests." },
+    read: { tab: "Women who could read", min: 0, max: 100, step: 20, fmt: (v) => v + "%",
+            note: "Share of adult women who could read and write. Early figures are estimates from marriage registers and censuses." },
+    pay:  { tab: "Pay compared with men", min: 30, max: 100, step: 10, fmt: (v) => String(v),
+            note: "For every 100 a man earned, how much a woman earned. Gaps in a line mean there is no reliable figure, often because most women worked on family farms without a wage." }
+  };
+
+  function buildMetricTabs() {
+    $("metricTabs").innerHTML = Object.entries(METRICS).map(([k, m]) =>
+      `<button type="button" role="tab" data-m="${k}">${m.tab}</button>`).join("");
+    $("metricTabs").addEventListener("click", (e) => {
+      const b = e.target.closest("button[data-m]");
+      if (b) { state.metric = b.dataset.m; renderChart(); }
+    });
+  }
+
   function renderChart() {
+    const M = METRICS[state.metric];
+    [...$("metricTabs").children].forEach((b) => b.setAttribute("aria-selected", String(b.dataset.m === state.metric)));
+    $("metricNote").textContent = M.note;
     const W = 860, H = 340, L = 44, R = 20, T = 18, B = 34;
     const x = (yr) => L + ((yr - 1850) / (2025 - 1850)) * (W - L - R);
-    const y = (a) => T + (1 - (a - AGE_MIN) / (AGE_MAX - AGE_MIN)) * (H - T - B);
+    const y = (v) => T + (1 - (v - M.min) / (M.max - M.min)) * (H - T - B);
+    const val = (c, yr) => DATA[c][yr][state.metric];
     const parts = [];
     const sel = ERAS[state.era];
     parts.push(`<rect class="band" x="${x(sel) - 14}" y="${T}" width="28" height="${H - T - B}" rx="6"/>`);
-    for (let a = AGE_MIN; a <= AGE_MAX; a += 2) {
-      parts.push(`<line class="grid" x1="${L}" x2="${W - R}" y1="${y(a)}" y2="${y(a)}"/>`);
-      parts.push(`<text x="${L - 8}" y="${y(a) + 4}" text-anchor="end">${a}</text>`);
+    for (let v = M.min; v <= M.max; v += M.step) {
+      parts.push(`<line class="grid" x1="${L}" x2="${W - R}" y1="${y(v)}" y2="${y(v)}"/>`);
+      parts.push(`<text x="${L - 8}" y="${y(v) + 4}" text-anchor="end">${v}</text>`);
     }
     ERAS.forEach((yr) => {
       parts.push(`<text x="${x(yr)}" y="${H - 10}" text-anchor="middle" class="${yr === sel ? "band-label" : ""}">${yr}</text>`);
     });
     const focus = state.view === "journey" ? state.country : null;
     COUNTRIES.forEach((c) => {
-      const pts = ERAS.map((yr) => [x(yr), y(DATA[c.id][yr].age), DATA[c.id][yr].age, yr]);
+      const pts = ERAS.filter((yr) => val(c.id, yr) != null).map((yr) => [x(yr), y(val(c.id, yr)), val(c.id, yr), yr]);
+      if (!pts.length) return;
+      // Start a new line segment wherever an era is missing.
+      let d = "", prev = null;
+      pts.forEach((p) => {
+        const gap = prev == null || ERAS.indexOf(p[3]) - ERAS.indexOf(prev) > 1;
+        d += (gap ? " M" : " L") + p[0].toFixed(1) + "," + p[1].toFixed(1);
+        prev = p[3];
+      });
       const dim = focus && focus !== c.id ? ' opacity=".25"' : "";
-      parts.push(`<g${dim}><path class="series" style="stroke:var(--c-${c.id})" d="M${pts.map((p) => p[0].toFixed(1) + "," + p[1].toFixed(1)).join(" L")}"/>` +
-        pts.map((p) => `<circle class="pt" cx="${p[0]}" cy="${p[1]}" r="${p[3] === sel ? 5.5 : 3.5}" style="fill:var(--c-${c.id})"><title>${c.name}, ${p[3]}: about ${fmtAge(p[2])}</title></circle>`).join("") +
+      parts.push(`<g${dim}><path class="series" style="stroke:var(--c-${c.id})" d="${d.trim()}"/>` +
+        pts.map((p) => `<circle class="pt" cx="${p[0]}" cy="${p[1]}" r="${p[3] === sel ? 5.5 : 3.5}" style="fill:var(--c-${c.id})"><title>${c.name}, ${p[3]}: about ${M.fmt(p[2])}</title></circle>`).join("") +
         `</g>`);
     });
     // Value labels at the selected year, nudged apart so they don't collide.
     const labels = COUNTRIES
-      .filter((c) => !focus || focus === c.id)
-      .map((c) => ({ c, v: DATA[c.id][sel].age, ty: y(DATA[c.id][sel].age) }))
+      .filter((c) => (!focus || focus === c.id) && val(c.id, sel) != null)
+      .map((c) => ({ c, v: val(c.id, sel), ty: y(val(c.id, sel)) }))
       .sort((a, b) => a.ty - b.ty);
     for (let i = 1; i < labels.length; i++) {
       if (labels[i].ty - labels[i - 1].ty < 14) labels[i].ty = labels[i - 1].ty + 14;
@@ -172,9 +228,9 @@
     const right = sel > 2000;
     labels.forEach((l) => {
       const lx = x(sel) + (right ? -20 : 20);
-      parts.push(`<text class="pt-label" x="${lx}" y="${l.ty + 4}" text-anchor="${right ? "end" : "start"}" style="fill:var(--c-${l.c.id})">${fmtAge(l.v)}</text>`);
+      parts.push(`<text class="pt-label" x="${lx}" y="${l.ty + 4}" text-anchor="${right ? "end" : "start"}" style="fill:var(--c-${l.c.id})">${M.fmt(l.v)}</text>`);
     });
-    $("chart").innerHTML = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Line chart of the usual age of women at first marriage, 1850 to 2025, for five countries">${parts.join("")}</svg>`;
+    $("chart").innerHTML = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Line chart: ${M.tab}, 1850 to 2025, for five countries">${parts.join("")}</svg>`;
   }
 
   function buildLegend() {
@@ -240,6 +296,7 @@
   buildViewSwitch();
   buildRightTabs();
   buildLegend();
+  buildMetricTabs();
   renderVotes();
   render();
 })();
