@@ -161,6 +161,12 @@ button { font: inherit; color: inherit; }
 .ten { width: 100%; height: auto; }
 .ten circle, .ten path { fill: var(--line); }
 .ten.on circle, .ten.on path { fill: var(--cc); }
+.careers { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 5px; }
+.careers li { display: grid; gap: 1px; border-radius: 8px; padding: 5px 8px; font-size: .8rem; line-height: 1.25; }
+.careers li span { color: var(--ink); font-weight: 600; }
+.careers b { font-size: .74rem; font-weight: 700; }
+.did { border-left: 3px solid var(--cc); padding-left: 9px; }
+.did-label { font-weight: 700; }
 .fact { display: grid; gap: 6px; font-size: .86rem; }
 .fact h4 { margin: 0; font: 500 11px/1.2 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
 .meter, .pay-bars { position: relative; display: block; height: 8px; background: var(--sunk); border-radius: 99px; overflow: hidden; }

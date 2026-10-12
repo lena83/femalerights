@@ -764,3 +764,70 @@ for (const c in DIVORCE) for (const y in DIVORCE[c]) {
   DATA[c][y].rights.divorce = DIVORCE[c][y][0];
   DATA[c][y].divorceNote = DIVORCE[c][y][1];
 }
+
+// ---------- Could she be a…? ----------
+// [writer, artist, doctor, surgeon, "Did you know?" fact]  0 = No, 1 = Rarely / against the odds, 2 = Yes
+const CAREERS = [
+  { key: "writer", label: "Writer" },
+  { key: "artist", label: "Artist" },
+  { key: "doctor", label: "Doctor" },
+  { key: "surgeon", label: "Surgeon" }
+];
+const CAREER_LEVELS = ["No", "Rarely", "Yes"];
+const PROFESSIONS = {
+  uk: {
+    1850: [1, 1, 0, 0, "The Brontë sisters published their famous novels in 1847 under men's names (Currer, Ellis and Acton Bell) so critics would take them seriously."],
+    1880: [1, 1, 1, 0, "The novelist 'George Eliot', author of Middlemarch, was really a woman called Mary Ann Evans."],
+    1900: [2, 1, 1, 1, "In 1911 Eleanor Davies-Colley became the first woman to join the Royal College of Surgeons."],
+    1925: [2, 2, 2, 1, "Two women helped found the Royal Academy of Arts in 1768, but no other woman joined it until Annie Swynnerton in 1922."],
+    1945: [2, 2, 2, 1, "Agatha Christie was writing her detective stories. Her books have sold over 2 billion copies, more than any other novelist."],
+    1965: [2, 2, 2, 1, "In 1964 Dorothy Hodgkin became the first British woman to win a Nobel Prize in science, for working out the shapes of molecules like penicillin."],
+    1990: [2, 2, 2, 2, "J. K. Rowling began writing Harry Potter in 1990. Her publisher suggested using initials so that boys would not be put off by a woman's name."],
+    2025: [2, 2, 2, 2, "More than half of new doctors in the UK are women."]
+  },
+  usa: {
+    1850: [2, 1, 1, 0, "In 1849 Elizabeth Blackwell became the first woman in the US to earn a medical degree. The male students had voted to admit her, thinking it was a joke."],
+    1880: [2, 1, 1, 1, "Mary Edwards Walker worked as a surgeon in the Civil War. She is still the only woman ever awarded the Medal of Honor."],
+    1900: [2, 2, 1, 1, "The painter Mary Cassatt moved to Paris and showed her pictures with the famous Impressionists."],
+    1925: [2, 2, 1, 1, "Many medical schools let in only about 5 women for every 100 students."],
+    1945: [2, 2, 1, 1, "In 1946 Georgia O'Keeffe became the first woman given a solo exhibition of her life's work at the Museum of Modern Art in New York."],
+    1965: [2, 2, 1, 1, "Only about 7 in every 100 American doctors were women."],
+    1990: [2, 2, 2, 2, "In 1993 Toni Morrison became the first Black woman to win the Nobel Prize in Literature."],
+    2025: [2, 2, 2, 2, "More than half of America's medical students are women."]
+  },
+  russia: {
+    1850: [1, 1, 0, 0, "Women could not study at the Imperial Academy of Arts. They were only allowed to attend classes from 1871."],
+    1880: [2, 1, 1, 0, "Women's Medical Courses opened in St Petersburg in 1872, and their students cared for wounded soldiers in the war of 1877–78."],
+    1900: [2, 2, 1, 1, "Vera Gedroits was one of the first women army surgeons in the world. She operated on soldiers in the 1904–05 war with Japan."],
+    1925: [2, 2, 2, 2, "Painter Zinaida Serebriakova's cheerful self-portrait 'At the Dressing Table' (1909) hangs in Moscow's Tretyakov Gallery."],
+    1945: [2, 2, 2, 2, "Thousands of women doctors and surgeons worked in field hospitals just behind the front line."],
+    1965: [2, 2, 2, 2, "Anna Akhmatova, one of Russia's greatest poets, was nominated for the Nobel Prize in Literature in 1965."],
+    1990: [2, 2, 2, 2, "In the 1990s women such as Alexandra Marinina became Russia's best-selling detective writers."],
+    2025: [2, 2, 2, 2, "About 7 in 10 doctors in Russia are women."]
+  },
+  turkey: {
+    1850: [1, 0, 0, 0, "Women poets like Leyla Hanım (died 1847) wrote elegant poetry in the classical Ottoman 'Divan' style."],
+    1880: [1, 0, 0, 0, "The Ottoman Fine Arts School opened in 1882, but only for men. Girls could only learn painting at home from private tutors."],
+    1900: [1, 1, 0, 0, "Women could not study medicine in the empire, so most women patients were cared for by midwives and women healers."],
+    1925: [2, 2, 1, 0, "The painter Mihri Müşfik was the first head of the Fine Arts School for Women, which opened in Istanbul in 1914."],
+    1945: [2, 2, 2, 1, "Istanbul University's medical school first accepted women in 1922, and by the 1940s Turkey had hundreds of women doctors."],
+    1965: [2, 2, 2, 1, "Painter Fahrelnissa Zeid made huge, colourful abstract paintings that were shown in Paris, London and New York."],
+    1990: [2, 2, 2, 2, "Doctor Türkan Saylan fought leprosy and in 1989 set up a group that has helped thousands of girls stay in school."],
+    2025: [2, 2, 2, 2, "Almost half of Turkey's university lecturers are women."]
+  },
+  china: {
+    1850: [1, 1, 0, 0, "Some women from educated families were admired poets and painters, like the poet Gu Taiqing (1799–1877)."],
+    1880: [1, 1, 1, 0, "Women were not allowed to perform in Peking opera, so men played all the female roles."],
+    1900: [1, 1, 1, 0, "In 1896 Kang Cheng and Shi Meiyu graduated as doctors in the USA and came home to open hospitals for women and children."],
+    1925: [2, 1, 1, 1, "Pan Yuliang studied painting in France and Italy, then came home to teach art in Shanghai."],
+    1945: [2, 2, 1, 1, "Writer Eileen Chang became a star in Shanghai with the short stories she published in 1943–44."],
+    1965: [2, 2, 2, 2, "Liang Jun became China's first woman tractor driver in 1948. A picture of her was printed on the 1-yuan banknote."],
+    1990: [2, 2, 2, 2, "Actress Gong Li became a world-famous film star after the film 'Red Sorghum' (1987)."],
+    2025: [2, 2, 2, 2, "About half of China's doctors are women."]
+  }
+};
+for (const c in PROFESSIONS) for (const y in PROFESSIONS[c]) {
+  const p = PROFESSIONS[c][y];
+  DATA[c][y].careers = { writer: p[0], artist: p[1], doctor: p[2], surgeon: p[3] };
+  DATA[c][y].fact = p[4];
+}

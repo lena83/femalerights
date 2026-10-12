@@ -91,6 +91,14 @@
         </div>
         <div class="kids" aria-hidden="true">${kidIcons(cell.kids)}</div>
         <section class="fact">
+          <h4>Could she be a…?</h4>
+          <ul class="careers">${CAREERS.map((k) => {
+            const v = cell.careers[k.key];
+            return `<li class="pill-${v}"><span>${k.label}</span><b>${v === 1 ? "" : SYMBOL[v] + " "}${CAREER_LEVELS[v]}</b></li>`;
+          }).join("")}</ul>
+          <p class="did"><span class="did-label">Did you know?</span> ${cell.fact}</p>
+        </section>
+        <section class="fact">
           <h4>Divorce</h4>
           <p>${cell.divorceNote}</p>
         </section>
