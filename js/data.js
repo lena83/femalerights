@@ -984,3 +984,178 @@ for (const c in MORE_CAREERS) for (const y in MORE_CAREERS[c]) {
   DATA[c][y].careers.scientist = MORE_CAREERS[c][y][0];
   DATA[c][y].careers.pilot = MORE_CAREERS[c][y][1];
 }
+
+// ---------- Norway ----------
+// Added as a sixth country. Everything for Norway lives in this block.
+COUNTRIES.push({ id: "norway", name: "Norway", skin: "#f4d9c4", hair: "#a9844a" });
+VOTE_MILESTONES.splice(1, 0, { id: "norway", label: "Norway", year: 1907, end: 1913,
+  note: "1907: women with some income, or married to a man with income, could vote. 1913: all women, one of the first independent countries." });
+
+DATA.norway = {
+  1850: {
+    state: "Norway (in union with Sweden)",
+    rights: { vote: 0, property: 1, work: 1, business: 1, school: 0, divorce: 1 },
+    age: 27, kids: 4.5, read: 75, pay: null, work: 30,
+    dress: { style: "folk", hair: "bun", main: "#2b2d3a", accent: "#f5f1e8", trim: "#b3302c", apron: "#6f8fb3",
+      name: "Country folk dress",
+      text: "Village women wore a long dark skirt, a white linen blouse, a colourful bodice and an apron. Each valley had its own patterns and colours." },
+    note: "Daughters inherited the same as sons from 1854, earlier than in most of Europe. But a husband controlled his wife's money, and unmarried women were treated as legal children until they were 25. Almost every child learned to read, because they had to read the Bible before church confirmation.",
+    star: { name: "Camilla Collett", text: "Her novel 'The District Governor's Daughters' (1854–55) criticised arranged marriages and is called Norway's first feminist novel." },
+    school: "Most country children went to 'wandering schools', where a teacher moved from farm to farm. Reading was needed for church confirmation, so most girls learned to read, though fewer learned to write.",
+    jobs: ["Farm work", "Maid", "Dairymaid at the summer mountain farm", "Spinning and weaving", "Fish processing"],
+    payNote: "No reliable figures. Maids were paid mostly in food, lodging and clothes.",
+    workNote: "Many women worked as maids and on farms, but farm wives' work was rarely counted.",
+    divorceNote: "Divorce needed a special licence from the king, given for reasons like adultery or desertion. It was rare.",
+    businessNote: "Widows and unmarried women could run some trades, like baking or a small shop, but a married woman's business was controlled by her husband.",
+    careers: { writer: 1, artist: 1, doctor: 0, surgeon: 0, scientist: 0, pilot: null },
+    fact: "Camilla Collett published her famous novel without her name on it."
+  },
+  1880: {
+    state: "Norway (in union with Sweden)",
+    rights: { vote: 0, property: 1, work: 1, business: 1, school: 0, divorce: 1 },
+    age: 26.5, kids: 4.4, read: 90, pay: 50, work: 30,
+    dress: { style: "bustle", hair: "bun", main: "#3b5d6e", accent: "#e3c9a0",
+      name: "City bustle dress",
+      text: "In towns like Christiania (now Oslo), women followed Paris fashion. In the countryside, folk dress was still common." },
+    note: "Most Norwegians lived on farms and by the sea. Many women ran the farm alone while the men were away fishing or sailing. Women could not yet vote or go to university.",
+    star: { name: "Cecilie Thoresen", text: "In 1882 she became the first woman to study at a Norwegian university, after a law was changed for her." },
+    school: "Primary school was compulsory for all children. In towns, girls could go to private girls' schools, but not to university.",
+    jobs: ["Maid", "Farm work", "Teacher", "Seamstress", "Telegraph operator"],
+    payNote: "Women teachers earned much less than men teachers.",
+    workNote: "Many young women worked as maids before marrying, and women kept farms going while men were at sea.",
+    divorceNote: "Divorce still needed a royal licence and was rare.",
+    businessNote: "Unmarried women and widows ran shops and bakeries, but married women needed their husband's consent.",
+    careers: { writer: 2, artist: 1, doctor: 0, surgeon: 0, scientist: 0, pilot: null },
+    fact: "Painter Harriet Backer's 'Blue Interior' (1883) hangs in Norway's National Museum."
+  },
+  1900: {
+    state: "Norway (in union with Sweden)",
+    rights: { vote: 1, property: 2, work: 1, business: 2, school: 2, divorce: 1 },
+    age: 26, kids: 4.2, read: 97, pay: 50, work: 32,
+    dress: { style: "folk", hair: "plaits", main: "#1f3554", accent: "#f7f3ea", trim: "#c23b33", apron: "#2c4a2e",
+      name: "The bunad",
+      text: "Writer Hulda Garborg encouraged women to wear the bunad, a festive folk costume, as a proud symbol of Norway." },
+    note: "From 1888 a married woman controlled her own earnings. Women could get university degrees from 1884. In 1901 women with some income won the vote in local elections, and Norway became independent from Sweden in 1905.",
+    star: { name: "Gina Krog", text: "Led the fight for women's votes and in 1884 helped found the Norwegian Association for Women's Rights." },
+    school: "Girls could take the university entrance exam from 1882 and earn degrees from 1884.",
+    jobs: ["Maid", "Factory worker (textiles, matches)", "Teacher", "Telephone operator", "Shop assistant"],
+    payNote: "Women's pay was about half of men's.",
+    workNote: "Many young women emigrated to America to work as maids.",
+    divorceNote: "Divorce was still rare and needed a royal licence or a court case.",
+    businessNote: "From 1888 married women controlled their own earnings and could run their own business.",
+    careers: { writer: 2, artist: 2, doctor: 1, surgeon: 0, scientist: 1, pilot: null },
+    fact: "In 1893 Marie Spångberg became the first woman to qualify as a doctor in Norway."
+  },
+  1925: {
+    state: "Norway",
+    rights: { vote: 2, property: 2, work: 1, business: 2, school: 2, divorce: 2 },
+    age: 26, kids: 2.9, read: 99, pay: 55, work: 30,
+    dress: { style: "flapper", hair: "bob", main: "#a33b55", accent: "#e8d39a",
+      name: "Short dress and bob",
+      text: "Knee-length dresses and short hair. Women also skied and skated in practical trousers and knitted sweaters." },
+    note: "Norway gave all women the vote in 1913, one of the first independent countries to do so. In 1912 most public jobs opened to women, though jobs like priest and army officer stayed closed. Anna Rogstad became the first woman to sit in parliament in 1911.",
+    star: { name: "Sonja Henie", text: "Figure skater who won Olympic gold in 1928, 1932 and 1936, then became a Hollywood film star." },
+    school: "Seven years of primary school for everyone, and more girls went on to secondary school in the towns.",
+    jobs: ["Office worker", "Shop assistant", "Maid", "Teacher", "Nurse"],
+    payNote: "Pay agreements often had separate, lower 'women's rates'.",
+    workNote: "Most women stopped working when they married.",
+    divorceNote: "Laws from 1909 and 1918 let couples divorce after living apart, and treated wives and husbands equally.",
+    businessNote: "Women could own and run businesses in their own name.",
+    careers: { writer: 2, artist: 2, doctor: 1, surgeon: 1, scientist: 1, pilot: 1 },
+    fact: "In 1912 biologist Kristine Bonnevie became Norway's first woman professor."
+  },
+  1945: {
+    state: "Norway",
+    rights: { vote: 2, property: 2, work: 1, business: 2, school: 2, divorce: 2 },
+    age: 25, kids: 2.4, read: 99, pay: 60, work: 28,
+    dress: { style: "forties", hair: "cloche", main: "#4b5f7a", accent: "#e6dcc5", hat: "#c8323a",
+      name: "Plain dress and red knitted cap",
+      text: "Clothes were rationed under the occupation. Some people wore red knitted caps as a quiet protest until the Germans banned them in 1942." },
+    note: "Germany occupied Norway from 1940 to 1945. Women carried secret messages, hid refugees and knitted for the resistance. In 1945 Kirsten Hansteen became the first woman in a Norwegian government.",
+    star: { name: "Sigrid Undset", text: "Won the Nobel Prize in Literature in 1928. During the war she fled to the USA and spoke out against the Nazi occupation." },
+    school: "In 1942 more than a thousand teachers were arrested for refusing to teach Nazi ideas.",
+    jobs: ["Farm work", "Maid", "Office worker", "Nurse", "Teacher"],
+    payNote: "Separate, lower pay rates for women were still normal.",
+    workNote: "Married women were often expected to leave paid work to make room for men.",
+    divorceNote: "Wives and husbands had equal rights to divorce.",
+    businessNote: "Women kept many family businesses and farms going during the occupation.",
+    careers: { writer: 2, artist: 2, doctor: 2, surgeon: 1, scientist: 2, pilot: 1 },
+    fact: "Gidsken Jakobsen ran her own airline with seaplanes in northern Norway in the 1930s."
+  },
+  1965: {
+    state: "Norway",
+    rights: { vote: 2, property: 2, work: 1, business: 2, school: 2, divorce: 2 },
+    age: 22.5, kids: 2.9, read: 99, pay: 70, work: 32,
+    dress: { style: "mini", hair: "long", main: "#3e7c8a", accent: "#2a2a33", boots: true,
+      name: "Miniskirt and long hair",
+      text: "Young women wore short skirts and boots, and patterned knitted sweaters were everywhere." },
+    note: "This was the age of the housewife ('husmor'). Most married women stayed at home, and there were few nurseries. In 1961 unions and employers agreed to phase out the separate, lower pay rates for women.",
+    star: { name: "Ingrid Bjerkås", text: "In 1961 she became Norway's first woman priest. Some churches refused to let her lead services." },
+    school: "Nine years of school became compulsory in 1969, and more girls went on to university.",
+    jobs: ["Secretary", "Shop assistant", "Nurse", "Teacher", "Cleaner"],
+    payNote: "After 1961, separate 'women's pay rates' were slowly removed.",
+    workNote: "The 'housewife era': Norway had fewer working mothers than most of Western Europe.",
+    divorceNote: "Wives and husbands had equal rights to divorce.",
+    businessNote: "Women could own businesses, but most married women stayed at home.",
+    careers: { writer: 2, artist: 2, doctor: 2, surgeon: 1, scientist: 2, pilot: 1 },
+    fact: "The black-and-white 'Marius' sweater pattern (1953) became Norway's most famous knitting design."
+  },
+  1990: {
+    state: "Norway",
+    rights: { vote: 2, property: 2, work: 2, business: 2, school: 2, divorce: 2 },
+    age: 26, kids: 1.9, read: 99, pay: 82, work: 71,
+    dress: { style: "jeans", hair: "long", main: "#c9473f", accent: "#3e5b8a",
+      name: "Jeans and sweaters",
+      text: "Jeans, big knitted sweaters and practical outdoor jackets." },
+    note: "The Gender Equality Act (1978) banned discrimination. In 1986 Prime Minister Gro Harlem Brundtland chose 8 women for her 18-member government, which was then a world record.",
+    star: { name: "Grete Waitz", text: "Runner who won the New York City Marathon nine times and the first women's world championship marathon (1983)." },
+    school: "By the late 1980s more women than men were starting university.",
+    jobs: ["Nurse", "Teacher", "Office worker", "Shop worker", "Care worker"],
+    payNote: "Women earned roughly 80–85% of men's pay.",
+    workNote: "Nurseries and parental leave helped most mothers to work.",
+    divorceNote: "Either partner could ask for a divorce, usually after a year of living apart.",
+    businessNote: "Women could own and run any business.",
+    careers: { writer: 2, artist: 2, doctor: 2, surgeon: 2, scientist: 2, pilot: 2 },
+    fact: "In 1985 Norway became the first NATO country to let women serve in every military job, including fighter pilot."
+  },
+  2025: {
+    state: "Norway",
+    rights: { vote: 2, property: 2, work: 2, business: 2, school: 2, divorce: 2 },
+    age: 33, kids: 1.4, read: 99, pay: 88, work: 76,
+    dress: { style: "suit", hair: "bob", main: "#2f4a3e", accent: "#efece4", trouser: true,
+      name: "Practical and outdoorsy",
+      text: "Trousers, warm jackets and knitwear. Norwegians say 'there's no bad weather, only bad clothes'." },
+    note: "Fathers get their own months of paid parental leave (since 1993), and since 2006 the boards of big companies must be at least 40% women. Norway is often near the top of world rankings for equality.",
+    star: { name: "May-Britt Moser", text: "Brain scientist who won the Nobel Prize in Medicine in 2014 for discovering the brain's 'GPS' cells." },
+    school: "Girls do better than boys at school, and about 6 in 10 university students are women.",
+    jobs: ["Nurse", "Teacher", "Office worker", "Care worker", "Own business: health, design, consulting"],
+    payNote: "Women earn about 88% of men's average monthly pay, partly because more women work part time.",
+    workNote: "About three in four women of working age work, though many work part time.",
+    divorceNote: "Either partner can ask for a divorce, usually after one year of separation.",
+    businessNote: "Since 2006 the boards of big public companies must be at least 40% women.",
+    careers: { writer: 2, artist: 2, doctor: 2, surgeon: 2, scientist: 2, pilot: 2 },
+    fact: "In 2016 Norway became the first NATO country to make military service compulsory for women as well as men."
+  }
+};
+
+Object.assign(REASONS.vote, {
+  norway1850: "Only men who owned land or held public office could vote.",
+  norway1880: "Only men who owned land or held public office could vote.",
+  norway1900: "From 1901 women with some income could vote in local elections. The national vote came in 1907 for some women and in 1913 for all."
+});
+Object.assign(REASONS.property, {
+  norway1850: "Daughters inherited the same as sons from 1854, but a husband controlled his wife's property.",
+  norway1880: "Daughters inherited the same as sons, but a husband controlled his wife's property until 1888."
+});
+Object.assign(REASONS.work, {
+  norway1850: "Women worked as maids and on farms, but almost all professions were closed to them.",
+  norway1880: "Women could be teachers and telegraph operators, but most professions were closed.",
+  norway1900: "Most public jobs only opened to women in 1912.",
+  norway1925: "Some jobs, like priest and army officer, were still closed, and married women were pressured to leave work.",
+  norway1945: "Married women were often expected to give up paid jobs.",
+  norway1965: "There were few nurseries, and separate, lower pay rates for women were only being phased out."
+});
+Object.assign(REASONS.school, {
+  norway1850: "No woman could study at a Norwegian university.",
+  norway1880: "Girls could only take the university entrance exam from 1882."
+});

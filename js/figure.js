@@ -70,6 +70,16 @@ function arms(type, sleeve, skin) {
 }
 
 const BODIES = {
+  folk: (m, a, trim, d) => ({
+    hem: 196, noShoes: true, sleeve: "puff",
+    svg: `<path d="M51,80 L69,80 L83,196 L37,196 Z" fill="${m}"/>
+      <path d="M39,187 L81,187" stroke="${trim}" stroke-width="3.5"/>
+      <path d="M53,84 L67,84 L72,178 L48,178 Z" fill="${d.apron || a}"/>
+      <path d="M50,47 Q60,44 70,47 L69,82 L51,82 Z" fill="${trim}"/>
+      <path d="M54,47 L66,47 L60,60 Z" fill="${a}"/>
+      <circle cx="56" cy="66" r="1.4" fill="#e8c45a"/><circle cx="64" cy="66" r="1.4" fill="#e8c45a"/>
+      <circle cx="56" cy="74" r="1.4" fill="#e8c45a"/><circle cx="64" cy="74" r="1.4" fill="#e8c45a"/>`
+  }),
   crinoline: (m, a) => ({
     hem: 198, noShoes: true, sleeve: "long",
     svg: `<path d="M50,47 Q60,43 70,47 L67,80 C78,92 100,150 106,195 Q60,203 14,195 C20,150 42,92 53,80 Z" fill="${m}"/>

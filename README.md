@@ -1,6 +1,6 @@
 # Her Story Through Time
 
-An interactive, educational web page for young readers. It shows how women's lives changed from 1850 to today in five countries: the **United Kingdom, the United States, Russia (Russian Empire → USSR → Russia), Turkey (Ottoman Empire → Republic) and China (Qing → Republic → PRC)**.
+An interactive, educational web page for young readers. It shows how women's lives changed from 1850 to today in six countries: the **United Kingdom, the United States, Norway, Russia (Russian Empire → USSR → Russia), Turkey (Ottoman Empire → Republic) and China (Qing → Republic → PRC)**.
 
 For each country and each of 8 moments in time (1850, 1880, 1900, 1925, 1945, 1965, 1990, 2025) it shows:
 

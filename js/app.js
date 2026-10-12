@@ -322,7 +322,7 @@
       });
       H2 = H + 30 + missing.length * rowH;
     }
-    $("chart").innerHTML = `<svg viewBox="0 0 ${W} ${H2}" role="img" aria-label="Line chart: ${M.tab}, 1850 to 2025, for five countries">${parts.join("")}</svg>`;
+    $("chart").innerHTML = `<svg viewBox="0 0 ${W} ${H2}" role="img" aria-label="Line chart: ${M.tab}, 1850 to 2025, for six countries">${parts.join("")}</svg>`;
   }
 
   function buildLegend() {
