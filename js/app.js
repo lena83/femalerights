@@ -67,8 +67,10 @@
   function card(country, year) {
     const cell = DATA[country.id][year];
     const journey = state.view === "journey";
-    const heading = journey ? year : country.name;
-    const sub = journey ? cell.state : (cell.state !== country.name ? cell.state : `In ${year}`);
+    // Some columns take the name of the state at the time (Russian Empire → Soviet Union → Russia).
+    const name = country.eraName ? cell.state : country.name;
+    const heading = journey ? year : name;
+    const sub = journey ? cell.state : (cell.state !== name ? cell.state : `In ${year}`);
     const rights = RIGHTS.map((r) => {
       const v = cell.rights[r.key];
       return `<li><span>${r.label}</span><span class="pill pill-${v}"><b aria-hidden="true">${SYMBOL[v]}</b>${LEVELS[v]}</span></li>`;

@@ -30,7 +30,7 @@ const LEVELS = ["No", "Partly", "Yes"];
 const COUNTRIES = [
   { id: "uk",     name: "United Kingdom", skin: "#f1d2b6", hair: "#5b3a26" },
   { id: "usa",    name: "United States",  skin: "#efcfb0", hair: "#4a3020" },
-  { id: "russia", name: "Russia",         skin: "#f3d6bd", hair: "#7a5434" },
+  { id: "russia", name: "Russia",         skin: "#f3d6bd", hair: "#7a5434", eraName: true },
   { id: "turkey", name: "Turkey",         skin: "#e2b892", hair: "#2e211a" },
   { id: "china",  name: "China",          skin: "#ecc8a2", hair: "#1e1a19" }
 ];
