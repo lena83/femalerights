@@ -1,5 +1,5 @@
 (function () {
-  const state = { era: 0, view: "compare", country: "uk", right: "vote", metric: "age", timer: null };
+  const state = { era: 0, view: "compare", country: "uk", right: "vote", picked: "uk", metric: "age", timer: null };
   const $ = (id) => document.getElementById(id);
   const byId = Object.fromEntries(COUNTRIES.map((c) => [c.id, c]));
   const SYMBOL = ["✕", "½", "✓"];
@@ -99,6 +99,10 @@
           <p class="did"><span class="did-label">Did you know?</span> ${cell.fact}</p>
         </section>
         <section class="fact">
+          <h4>Running a business</h4>
+          <p>${cell.businessNote}</p>
+        </section>
+        <section class="fact">
           <h4>Divorce</h4>
           <p>${cell.divorceNote}</p>
         </section>
@@ -172,23 +176,51 @@
       if (!b) return;
       stop();
       state.era = +b.dataset.i;
+      state.picked = b.dataset.c;
       if (state.view === "journey") state.country = b.dataset.c;
       render();
-      $("cards").scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "start" });
     });
+    $("heat").addEventListener("mouseover", (e) => {
+      const b = e.target.closest("button[data-i]");
+      if (b) showReason(b.dataset.c, +b.dataset.i);
+    });
+    $("heat").addEventListener("focusin", (e) => {
+      const b = e.target.closest("button[data-i]");
+      if (b) showReason(b.dataset.c, +b.dataset.i);
+    });
+    $("heat").addEventListener("mouseleave", () => showReason(state.picked, state.era));
+  }
+
+  function reasonFor(cid, year, right) {
+    const cell = DATA[cid][year];
+    if (right === "business") return cell.businessNote;
+    if (right === "divorce") return cell.divorceNote;
+    const r = REASONS[right] && REASONS[right][cid + year];
+    if (r) return r;
+    return cell.rights[right] === 2 ? "Yes. Women had this right, the same as men." : "No. Women did not have this right.";
+  }
+
+  function showReason(cid, i) {
+    const year = ERAS[i], c = byId[cid];
+    const v = DATA[cid][year].rights[state.right];
+    const label = RIGHTS.find((r) => r.key === state.right).label;
+    $("reason").style.setProperty("--cc", `var(--c-${cid})`);
+    $("reason").innerHTML = `<p class="reason-head"><span class="dot" style="background:var(--c-${cid})"></span> <strong>${c.name}, ${year}</strong> · ${label}: <span class="pill pill-${v}"><b aria-hidden="true">${SYMBOL[v]}</b>${LEVELS[v]}</span></p><p>${reasonFor(cid, year, state.right)}</p>`;
   }
 
   function renderHeat() {
+    if (state.view === "journey") state.picked = state.country;
     [...$("rightTabs").children].forEach((b) => b.setAttribute("aria-selected", String(b.dataset.r === state.right)));
     const label = RIGHTS.find((r) => r.key === state.right).label;
     const head = `<thead><tr><th scope="col"></th>${ERAS.map((y, i) =>
       `<th scope="col" class="${i === state.era ? "on" : ""}">${y}</th>`).join("")}</tr></thead>`;
     const rows = COUNTRIES.map((c) => `<tr><th scope="row"><span class="dot" style="background:var(--c-${c.id})"></span> ${c.name}</th>${ERAS.map((y, i) => {
       const v = DATA[c.id][y].rights[state.right];
-      const on = i === state.era && (state.view === "compare" || state.country === c.id);
+      const on = i === state.era && c.id === state.picked;
       return `<td><button type="button" class="lvl-${v}${on ? " on" : ""}" data-i="${i}" data-c="${c.id}" aria-label="${c.name}, ${y}: ${label}: ${LEVELS[v]}" title="${DATA[c.id][y].state}, ${y}: ${LEVELS[v]}">${SYMBOL[v]}</button></td>`;
     }).join("")}</tr>`).join("");
     $("heat").innerHTML = head + `<tbody>${rows}</tbody>`;
+    showReason(state.picked, state.era);
   }
 
   // ---------- Marriage-age chart ----------

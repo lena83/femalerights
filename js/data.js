@@ -831,3 +831,141 @@ for (const c in PROFESSIONS) for (const y in PROFESSIONS[c]) {
   DATA[c][y].careers = { writer: p[0], artist: p[1], doctor: p[2], surgeon: p[3] };
   DATA[c][y].fact = p[4];
 }
+
+// ---------- Running a business ----------
+const BUSINESS = {
+  uk: {
+    1850: "Single women and widows could run shops, inns and lodging houses. A married woman's business legally belonged to her husband.",
+    1880: "Since 1870 a wife could keep her own earnings, but until 1882 her husband still controlled her property.",
+    1900: "Wives could now own a business, but many trades and professional bodies refused to accept women until 1919.",
+    1925: "Women could own and run businesses in their own name.",
+    1945: "Women ran shops, cafés, hairdressers and farms in their own name.",
+    1965: "Banks often wanted a husband's or father's signature before lending a woman money, until a 1975 law stopped this.",
+    1990: "The law banned banks from treating women unfairly. Anita Roddick's Body Shop, started in 1976, had become a worldwide chain.",
+    2025: "Women run businesses of every kind, though they still get a much smaller share of investors' money than men."
+  },
+  usa: {
+    1850: "Single women and widows could trade. In many states a wife needed a court's permission to run a business in her own name.",
+    1880: "More states let wives trade in their own name, but the rules varied from state to state.",
+    1900: "Women like Madam C. J. Walker built big businesses, but wives' rights still varied by state and loans were hard to get.",
+    1925: "Banks rarely lent money to a woman unless a husband or father signed too.",
+    1945: "Women ran many businesses during the war, but banks still rarely lent to them without a man's signature.",
+    1965: "A woman often could not get a credit card or loan without her husband's signature, until a 1974 law changed this.",
+    1990: "A 1988 law ended rules in some states that made women get a male relative to co-sign a business loan.",
+    2025: "Women own about 4 in 10 US businesses."
+  },
+  russia: {
+    1850: "Women, often widows, could register as merchants. But most women were serfs, and a wife needed her husband's permission to travel.",
+    1880: "Merchant women ran shops and trading houses, but a wife needed her husband's permission to get a passport.",
+    1900: "Some women ran shops, workshops and even factories, but a wife still needed her husband's permission to live and work away from home.",
+    1925: "In the early 1920s small private shops were allowed again, for women and men, but this ended by about 1930.",
+    1945: "Private businesses were banned for everyone, women and men.",
+    1965: "Private businesses were banned for everyone, women and men.",
+    1990: "From 1988 people could set up small 'cooperatives', such as cafés and sewing workshops.",
+    2025: "Women can own and run any business."
+  },
+  turkey: {
+    1850: "Islamic law let women own shops and property. But many city women traded through male relatives, because they were not expected to deal with men in public.",
+    1880: "Women owned property and shops, but usually did business through men in the family.",
+    1900: "Women owned property and some ran workshops, but trading in public was mostly men's work.",
+    1925: "Women could own businesses, but the law let a husband stop his wife from working.",
+    1945: "Women could own businesses, but a husband could legally stop his wife from working (until 1990).",
+    1965: "Women could own businesses, but a husband could legally stop his wife from working (until 1990).",
+    1990: "From 1990 a wife no longer needed her husband's permission to work or run a business.",
+    2025: "Women can own and run any business, though far fewer women than men do."
+  },
+  china: {
+    1850: "Widows sometimes ran the family shop, and village women sold goods at markets. But property belonged to the family, under its male head.",
+    1880: "Women sold goods at markets and some ran tea houses or inns, but property belonged to the family.",
+    1900: "Women ran small trades, but property and big decisions belonged to the men of the family.",
+    1925: "City women opened shops and schools, but daughters rarely inherited, so few had money to start a business.",
+    1945: "The 1930 law gave women equal property rights, but in villages custom often won.",
+    1965: "Private businesses were banned for everyone, women and men.",
+    1990: "From the 1980s people could start private businesses again, and many women opened shops and small factories.",
+    2025: "China has more self-made women billionaires than any other country."
+  }
+};
+for (const c in BUSINESS) for (const y in BUSINESS[c]) DATA[c][y].businessNote = BUSINESS[c][y];
+
+// ---------- One-line reasons for the scoreboard ----------
+// Keyed by right, then country + year. Squares without an entry get a plain Yes/No line.
+const REASONS = {
+  vote: {
+    uk1880: "Only some unmarried women who paid local taxes could vote, and only in town elections.",
+    uk1900: "Some women could vote in local elections, but no woman could vote for Parliament.",
+    uk1925: "Women over 30 who met property rules could vote. Younger women had to wait until 1928.",
+    usa1880: "Only in Wyoming and Utah territories.",
+    usa1900: "Only in four western states: Wyoming, Colorado, Utah and Idaho.",
+    china1945: "There were no national elections during the war. Women got the vote in the 1947 constitution.",
+    russia1850: "Nobody, woman or man, could vote. Russia was ruled by the tsar.",
+    russia1880: "Nobody, woman or man, could vote. Russia was ruled by the tsar.",
+    russia1900: "There was no national parliament until 1906, and then only men could vote.",
+    russia1945: "Women and men voted, but there was only one party to choose.",
+    russia1965: "Women and men voted, but there was only one party to choose.",
+    turkey1850: "There was no parliament. The sultan ruled.",
+    turkey1880: "A parliament met briefly in 1877–78, elected only by men.",
+    turkey1900: "Men voted for an Ottoman parliament from 1908. Women could not.",
+    turkey1925: "Women won the vote in local elections in 1930 and national ones in 1934.",
+    china1850: "Nobody, woman or man, could vote. China was ruled by an emperor.",
+    china1880: "Nobody, woman or man, could vote. China was ruled by an emperor.",
+    china1900: "Nobody, woman or man, could vote. China was ruled by an emperor.",
+    china1925: "A few provinces let women vote locally, but there was no national vote for women.",
+    china1965: "Women and men voted, but there was only one party to choose.",
+    china1990: "Women and men voted in local elections, but there was only one party to choose.",
+    china2025: "Women and men vote in local elections, but there is only one party to choose."
+  },
+  property: {
+    uk1850: "A wife's property and wages belonged to her husband (coverture).",
+    uk1880: "From 1870 wives kept their own wages. Full control of their property came in 1882.",
+    usa1850: "It depended on the state. New York let wives keep their property from 1848, but most states did not yet.",
+    usa1880: "Many states now let wives keep their property and wages, but not all.",
+    russia1850: "Noblewomen kept their own land and money after marrying, but serf women owned almost nothing.",
+    russia1880: "Married women kept their own property, but most peasant land belonged to the village and was managed by men.",
+    russia1900: "Married women kept their own property, but most peasant land belonged to the village and was managed by men.",
+    turkey1850: "Islamic law let wives keep their own property, though daughters inherited half as much as sons.",
+    china1850: "Property belonged to the family, under its male head. Daughters usually inherited nothing.",
+    china1925: "Courts began giving daughters inheritance rights from 1926, but custom still favoured sons.",
+    china1945: "The 1930 Civil Code gave women equal rights, but in villages old customs often won."
+  },
+  work: {
+    uk1850: "Poor women worked in mills and as servants, but professions like law and medicine were closed to women.",
+    uk1880: "Women could be teachers, nurses and servants, but most professions were closed to them.",
+    uk1900: "New office and shop jobs opened, but law, accountancy and many others stayed closed until 1919.",
+    uk1925: "The professions opened in 1919, but many employers sacked women when they married.",
+    uk1945: "The marriage bar was ending, but women were paid less and kept out of many senior jobs.",
+    uk1965: "Employers could legally refuse to hire women or pay them less, until new laws in 1970 and 1975.",
+    usa1850: "Mill work, teaching and service were open to women, but most professions were closed.",
+    usa1880: "Some states banned women from being lawyers, and most professions were very hard to enter.",
+    usa1900: "Many jobs were for men only, and many employers fired women when they married.",
+    usa1925: "Many schools and offices fired women teachers and clerks when they married.",
+    usa1945: "The war opened factory jobs to women, but many were pushed out again when the men came home.",
+    usa1965: "Newspapers still split job adverts into 'Help Wanted – Male' and 'Help Wanted – Female'.",
+    russia1850: "Most women were serfs and could not choose their work at all.",
+    russia1880: "A wife needed her husband's permission to take a job away from home.",
+    russia1900: "A wife needed her husband's permission to get a passport and work away from home (until 1914).",
+    turkey1850: "Women worked on farms and at home, but city women were expected to stay out of public workplaces.",
+    turkey1880: "Women worked on farms and at home, but city women were expected to stay out of public workplaces.",
+    turkey1900: "A few jobs like teaching and nursing were open to women. Most others were for men.",
+    turkey1925: "The new Republic opened jobs to women, but the law let a husband stop his wife from working.",
+    turkey1945: "A husband could legally stop his wife from taking a job (until 1990).",
+    turkey1965: "A husband could legally stop his wife from taking a job (until 1990).",
+    china1850: "Women worked at home and on farms. Respectable women were expected to stay inside the home.",
+    china1880: "Women worked at home and on farms. Respectable women were expected to stay inside the home.",
+    china1900: "Girls could work in new city mills, but most jobs outside the home were closed to women.",
+    china1925: "City women could become teachers, nurses and mill workers, but most professions were still for men.",
+    china1945: "More jobs were open, but family and custom usually decided what a woman could do."
+  },
+  school: {
+    uk1850: "No British university accepted women.",
+    uk1880: "Women could study at London University and at women's colleges, but Oxford and Cambridge gave them no degrees.",
+    uk1900: "Many universities gave women degrees, but Oxford (until 1920) and Cambridge (until 1948) did not.",
+    usa1850: "Only a few colleges, like Oberlin, admitted women.",
+    usa1880: "Some colleges and the new women's colleges admitted women, but many famous universities did not.",
+    russia1850: "Universities were closed to women.",
+    russia1880: "Women could attend the Higher Women's Courses, but universities and official degrees were closed to them.",
+    russia1900: "There were women's courses and a women's medical institute (1897), but universities were still closed to women.",
+    turkey1900: "A few women studied at foreign colleges in Istanbul. The first women's university opened in 1914.",
+    china1925: "Peking University admitted women from 1920, but very few girls even finished secondary school.",
+    china1945: "Universities were open to women, but war and poverty meant very few could go."
+  }
+};
