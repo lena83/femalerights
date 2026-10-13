@@ -19,7 +19,7 @@ There are also overview visuals: a rights scoreboard (heatmap) where each square
 
 ## Her Money (ages 13+)
 
-A second page, `her-money.html`, looks at money for women in the UK today: the pay gap, the cost of having children, pensions (with an interactive career-break calculator), divorce and wealth, plus practical tips. Every figure is cited on the page.
+A second page, `her-money.html`, looks at money for women in the UK today: the pay gap, the cost of having children, pensions (with an interactive career-break calculator), divorce, wealth and saving and investing (ISAs), plus practical tips. Every figure is cited on the page.
 
 ## How to open it
 

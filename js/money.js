@@ -54,6 +54,25 @@
     { label: "By age 64", value: 42 }
   ], 50, "%");
 
+  // HMRC ISA statistics via AJ Bell (2025): share of ISA subscribers choosing stocks and shares.
+  bars("isaBars", [
+    { label: "Women", value: 31 },
+    { label: "Men", value: 44, men: true }
+  ], 50, "%");
+
+  // Cash vs shares illustration: £50 a month from 18 to 65, in today's money.
+  (function growth() {
+    const monthly = 50, years = 47;
+    const fv = (r) => { let pot = 0; for (let i = 0; i < years; i++) pot = (pot + monthly * 12) * (1 + r); return pot; };
+    const cash = fv(0.01), shares = fv(0.04), paid = monthly * 12 * years;
+    $("growthText").innerHTML = `Imagine saving <strong>£50 a month</strong> from age 18 to 65. You would pay in ${gbp(paid)}. Left in cash, it might grow to about <strong>${gbp(cash)}</strong>; invested in shares, to about <strong>${gbp(shares)}</strong>.`;
+    bars("growthBars", [
+      { label: "Paid in", value: paid, men: true },
+      { label: "In cash", value: cash },
+      { label: "Invested in shares", value: shares }
+    ], shares * 1.02, "£");
+  })();
+
   // ---------- Pay gap chart (only years with a published ONS figure) ----------
   (function payChart() {
     const pts = [[1997, 17.4], [2018, 8.6], [2019, 8.9], [2022, 7.6], [2023, 7.7], [2024, 7.1], [2025, 6.9]];
