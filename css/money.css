@@ -69,6 +69,10 @@
 .calc .series { fill: none; stroke-width: 2.5; stroke-linejoin: round; }
 .calc .break-band { fill: var(--sunk); }
 .calc .lg { font: 600 12px var(--body); }
+.longer { grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: 16px 28px; align-items: center; max-width: none; }
+.longer > div:first-child { display: grid; gap: 8px; }
+.longer .bar-track { background: var(--surface); }
+@media (max-width: 800px) { .longer { grid-template-columns: 1fr; } }
 .presets { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
 .presets button { border: 1.5px solid var(--line); background: var(--surface); border-radius: 999px; padding: 5px 11px; font-size: .82rem; font-weight: 600; cursor: pointer; }
 .presets button:hover { border-color: var(--accent); }

@@ -42,6 +42,15 @@
     { label: "Men", value: 156000, men: true }
   ], 160000, "£");
 
+  // Spread over expected years of life at 65 (ONS life tables 2021–23: women 21.0, men 18.5).
+  const perW = 81000 / 21.0, perM = 156000 / 18.5;
+  $("perYearW").textContent = gbp(Math.round(perW / 100) * 100);
+  $("perYearM").textContent = gbp(Math.round(perM / 100) * 100);
+  bars("perYearBars", [
+    { label: "Women: £81,000 over 21 years", value: perW, text: gbp(Math.round(perW / 100) * 100) + " a year" },
+    { label: "Men: £156,000 over 18.5 years", value: perM, men: true, text: gbp(Math.round(perM / 100) * 100) + " a year" }
+  ], perM * 1.05, "£");
+
   // Legal & General 2025 survey.
   bars("divorceBars", [
     { label: "Women", value: 50 },
