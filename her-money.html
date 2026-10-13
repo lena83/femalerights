@@ -217,7 +217,7 @@
     <div class="calc" id="invest">
       <div class="calc-head">
         <h3>Try it: how much could your savings grow?</h3>
-        <p>Choose when you start, how much you put in each month and an average yearly return. The chart shows how much of the final amount is money you paid in, and how much is growth.</p>
+        <p>Choose when you start, how much you put in at the start and then every month, and what you invest in. The chart shows how much of the final amount is money you paid in, and how much is growth.</p>
       </div>
       <div class="calc-body">
         <form class="calc-inputs" id="investForm">
@@ -225,15 +225,18 @@
           <input type="range" id="invStart" min="16" max="60" step="1" value="18">
           <label for="invEnd">Keep going until age <output id="invEndOut"></output></label>
           <input type="range" id="invEnd" min="20" max="75" step="1" value="67">
-          <label for="invMonthly">Each month <output id="invMonthlyOut"></output></label>
+          <label for="invInitial">To start with <output id="invInitialOut"></output></label>
+          <input type="range" id="invInitial" min="0" max="20000" step="250" value="1000">
+          <label for="invMonthly">Then each month <output id="invMonthlyOut"></output></label>
           <input type="range" id="invMonthly" min="10" max="1000" step="10" value="100">
           <label for="invReturn">Average return a year <output id="invReturnOut"></output></label>
           <input type="range" id="invReturn" min="0" max="8" step="0.5" value="4">
-          <div class="presets" role="group" aria-label="Example returns">
-            <button type="button" data-r="1">Cash · 1%</button>
-            <button type="button" data-r="3">Mixed · 3%</button>
-            <button type="button" data-r="5">Shares · 5%</button>
+          <div class="presets" role="group" aria-label="What you invest in">
+            <button type="button" data-r="1">Cash savings · 1%</button>
+            <button type="button" data-r="3">Mixed fund · 3%</button>
+            <button type="button" data-r="5">Global index ETF · 5%</button>
           </div>
+          <p class="preset-note" id="presetNote"></p>
         </form>
         <div class="calc-out">
           <div class="calc-figs">

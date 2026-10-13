@@ -75,6 +75,8 @@
 @media (max-width: 800px) { .longer { grid-template-columns: 1fr; } }
 .presets { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
 .presets button { border: 1.5px solid var(--line); background: var(--surface); border-radius: 999px; padding: 5px 11px; font-size: .82rem; font-weight: 600; cursor: pointer; }
+.preset-note { font-size: .84rem; color: var(--muted); margin-top: 6px; line-height: 1.45; }
+.preset-note b { color: var(--ink); }
 .presets button:hover { border-color: var(--accent); }
 .presets button[aria-pressed="true"] { background: var(--accent-soft); border-color: var(--accent); color: var(--accent); }
 .calc .area-paid { fill: var(--men); opacity: .85; }

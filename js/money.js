@@ -70,11 +70,11 @@
   ], 50, "%");
 
   // ---------- Savings and investment calculator ----------
-  // Monthly payments, growing at a steady yearly return (in today's money).
-  function grow(startAge, endAge, monthly, rate) {
+  // A starting amount plus monthly payments, growing at a steady yearly return (in today's money).
+  function grow(startAge, endAge, initial, monthly, rate) {
     const m = Math.pow(1 + rate, 1 / 12) - 1;
-    let pot = 0, paid = 0;
-    const path = [[startAge, 0, 0]];
+    let pot = initial, paid = initial;
+    const path = [[startAge, pot, paid]];
     for (let age = startAge; age < endAge; age++) {
       for (let i = 0; i < 12; i++) { pot = (pot + monthly) * (1 + m); paid += monthly; }
       path.push([age + 1, pot, paid]);
@@ -82,17 +82,24 @@
     return path;
   }
 
-  const inv = ["invStart", "invEnd", "invMonthly", "invReturn"];
+  const inv = ["invStart", "invEnd", "invInitial", "invMonthly", "invReturn"];
+  const PRESET_NOTES = {
+    1: "<b>Cash savings:</b> a savings account or Cash ISA. Your money can't fall in value, but it usually grows only a little faster than prices.",
+    3: "<b>Mixed fund:</b> a fund holding both shares and bonds (loans to governments and companies). It usually rises and falls less than shares alone.",
+    5: "<b>Global index ETF:</b> an exchange-traded fund that follows an index of thousands of companies around the world, such as the MSCI World or FTSE All-World. You can hold one in a Stocks and Shares ISA or a pension. Fees are usually low, but its value can drop sharply in a bad year."
+  };
   function updateInvest() {
     let start = +$("invStart").value, end = +$("invEnd").value;
     if (end <= start) { end = Math.min(75, start + 1); $("invEnd").value = end; }
-    const monthly = +$("invMonthly").value, rate = +$("invReturn").value / 100;
+    const initial = +$("invInitial").value, monthly = +$("invMonthly").value, rate = +$("invReturn").value / 100;
     $("invStartOut").textContent = start;
     $("invEndOut").textContent = end;
+    $("invInitialOut").textContent = gbp(initial);
     $("invMonthlyOut").textContent = gbp(monthly);
+    $("presetNote").innerHTML = PRESET_NOTES[+$("invReturn").value] || "A return you chose. Try the buttons above to compare cash, a mixed fund and a global ETF.";
     $("invReturnOut").textContent = $("invReturn").value + "%";
     document.querySelectorAll(".presets button").forEach((btn) => btn.setAttribute("aria-pressed", String(+btn.dataset.r === +$("invReturn").value)));
-    const path = grow(start, end, monthly, rate);
+    const path = grow(start, end, initial, monthly, rate);
     const [, total, paid] = path[path.length - 1];
     $("invPaid").textContent = gbp(paid);
     $("invGrowth").textContent = gbp(total - paid);
@@ -100,7 +107,7 @@
     $("invTotal").textContent = gbp(total);
     let late = null;
     if (start + 10 < end) {
-      late = grow(start + 10, end, monthly, rate);
+      late = grow(start + 10, end, initial, monthly, rate);
       const lateTotal = late[late.length - 1][1];
       $("invLate").innerHTML = `If you started 10 years later, at ${start + 10}, you would have about <strong>${gbp(lateTotal)}</strong>, ${gbp(total - lateTotal)} less.`;
     } else {
