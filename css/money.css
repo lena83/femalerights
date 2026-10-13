@@ -48,8 +48,6 @@
 .bar-fill.men { background: var(--men); }
 
 .callout { background: var(--accent-soft); border-radius: var(--radius); padding: 18px 20px; display: grid; gap: 8px; max-width: 90ch; }
-.growth { display: grid; gap: 10px; max-width: 520px; }
-.callout .bar-track { background: var(--surface); }
 
 /* Calculator */
 .calc { background: var(--surface); border: 1.5px solid var(--accent); border-radius: var(--radius); padding: 20px; display: grid; gap: 18px; }
@@ -71,6 +69,21 @@
 .calc .series { fill: none; stroke-width: 2.5; stroke-linejoin: round; }
 .calc .break-band { fill: var(--sunk); }
 .calc .lg { font: 600 12px var(--body); }
+.presets { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
+.presets button { border: 1.5px solid var(--line); background: var(--surface); border-radius: 999px; padding: 5px 11px; font-size: .82rem; font-weight: 600; cursor: pointer; }
+.presets button:hover { border-color: var(--accent); }
+.presets button[aria-pressed="true"] { background: var(--accent-soft); border-color: var(--accent); color: var(--accent); }
+.calc .area-paid { fill: var(--men); opacity: .85; }
+.calc .area-growth { fill: var(--accent-soft); stroke: none; }
+.calc .line-late { stroke: var(--ink); stroke-dasharray: 5 4; stroke-width: 2; }
+.calc .lg { fill: var(--ink); }
+.late { font-size: .92rem; }
+.inv-legend { display: flex; flex-wrap: wrap; gap: 4px 16px; font-size: .85rem; }
+.inv-legend span { display: inline-flex; align-items: center; gap: 6px; }
+.sw { width: 12px; height: 12px; border-radius: 3px; display: inline-block; }
+.sw-growth { background: var(--accent-soft); border: 1.5px solid var(--accent); }
+.sw-paid { background: var(--men); }
+.sw-late { height: 0; width: 16px; border-top: 2px dashed var(--ink); border-radius: 0; }
 .assumptions { font-size: .86rem; color: var(--muted); }
 .assumptions summary { cursor: pointer; font-weight: 600; color: var(--ink); }
 .assumptions p { margin-top: 8px; max-width: 80ch; }
@@ -78,6 +91,8 @@
 /* Actions */
 .actions { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; }
 .actions li { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 16px; display: grid; gap: 6px; align-content: start; font-size: .93rem; }
+.act-icon { width: 44px; height: 44px; border-radius: 12px; background: var(--accent-soft); color: var(--accent); display: grid; place-items: center; margin-bottom: 4px; }
+.act-icon svg { width: 26px; height: 26px; }
 
 .foot a { color: var(--accent); }
 

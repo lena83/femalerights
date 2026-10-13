@@ -60,18 +60,78 @@
     { label: "Men", value: 44, men: true }
   ], 50, "%");
 
-  // Cash vs shares illustration: £50 a month from 18 to 65, in today's money.
-  (function growth() {
-    const monthly = 50, years = 47;
-    const fv = (r) => { let pot = 0; for (let i = 0; i < years; i++) pot = (pot + monthly * 12) * (1 + r); return pot; };
-    const cash = fv(0.01), shares = fv(0.04), paid = monthly * 12 * years;
-    $("growthText").innerHTML = `Imagine saving <strong>£50 a month</strong> from age 18 to 65. You would pay in ${gbp(paid)}. Left in cash, it might grow to about <strong>${gbp(cash)}</strong>; invested in shares, to about <strong>${gbp(shares)}</strong>.`;
-    bars("growthBars", [
-      { label: "Paid in", value: paid, men: true },
-      { label: "In cash", value: cash },
-      { label: "Invested in shares", value: shares }
-    ], shares * 1.02, "£");
-  })();
+  // ---------- Savings and investment calculator ----------
+  // Monthly payments, growing at a steady yearly return (in today's money).
+  function grow(startAge, endAge, monthly, rate) {
+    const m = Math.pow(1 + rate, 1 / 12) - 1;
+    let pot = 0, paid = 0;
+    const path = [[startAge, 0, 0]];
+    for (let age = startAge; age < endAge; age++) {
+      for (let i = 0; i < 12; i++) { pot = (pot + monthly) * (1 + m); paid += monthly; }
+      path.push([age + 1, pot, paid]);
+    }
+    return path;
+  }
+
+  const inv = ["invStart", "invEnd", "invMonthly", "invReturn"];
+  function updateInvest() {
+    let start = +$("invStart").value, end = +$("invEnd").value;
+    if (end <= start) { end = Math.min(75, start + 1); $("invEnd").value = end; }
+    const monthly = +$("invMonthly").value, rate = +$("invReturn").value / 100;
+    $("invStartOut").textContent = start;
+    $("invEndOut").textContent = end;
+    $("invMonthlyOut").textContent = gbp(monthly);
+    $("invReturnOut").textContent = $("invReturn").value + "%";
+    document.querySelectorAll(".presets button").forEach((btn) => btn.setAttribute("aria-pressed", String(+btn.dataset.r === +$("invReturn").value)));
+    const path = grow(start, end, monthly, rate);
+    const [, total, paid] = path[path.length - 1];
+    $("invPaid").textContent = gbp(paid);
+    $("invGrowth").textContent = gbp(total - paid);
+    $("invTotalLabel").textContent = "At " + end;
+    $("invTotal").textContent = gbp(total);
+    let late = null;
+    if (start + 10 < end) {
+      late = grow(start + 10, end, monthly, rate);
+      const lateTotal = late[late.length - 1][1];
+      $("invLate").innerHTML = `If you started 10 years later, at ${start + 10}, you would have about <strong>${gbp(lateTotal)}</strong>, ${gbp(total - lateTotal)} less.`;
+    } else {
+      $("invLate").textContent = "";
+    }
+    drawInvest(path, late, start, end);
+  }
+
+  function drawInvest(path, late, start, end) {
+    const W = 560, H = 250, L = 58, R = 16, T = 14, B = 30;
+    const max = Math.max(1, path[path.length - 1][1]) * 1.06;
+    const x = (age) => L + (age - start) / (end - start) * (W - L - R);
+    const y = (val) => T + (1 - val / max) * (H - T - B);
+    const out = [];
+    const nice = [1000, 2000, 5000, 10000, 20000, 50000, 100000, 200000, 500000, 1000000];
+    const step = nice.find((n) => max / n <= 5) || 2000000;
+    for (let g = 0; g <= max; g += step) {
+      const lbl = g === 0 ? "£0" : g >= 1000000 ? "£" + g / 1000000 + "m" : "£" + g / 1000 + "k";
+      out.push(`<line class="grid" x1="${L}" x2="${W - R}" y1="${y(g)}" y2="${y(g)}"/><text x="${L - 6}" y="${y(g) + 4}" text-anchor="end">${lbl}</text>`);
+    }
+    const span = end - start, tick = span > 30 ? 10 : span > 12 ? 5 : span > 6 ? 2 : 1;
+    for (let a = start; a <= end; a += tick) out.push(`<text x="${x(a)}" y="${H - 8}" text-anchor="middle">${a}</text>`);
+    if ((end - start) % tick) out.push(`<text x="${x(end)}" y="${H - 8}" text-anchor="middle">${end}</text>`);
+    const pts = (i) => path.map((p) => x(p[0]).toFixed(1) + "," + y(p[i]).toFixed(1)).join(" L");
+    const base = `L${x(end).toFixed(1)},${y(0)} L${x(start).toFixed(1)},${y(0)} Z`;
+    out.push(`<path class="area-growth" d="M${pts(1)} ${base}"/>`);
+    out.push(`<path class="area-paid" d="M${pts(2)} ${base}"/>`);
+    out.push(`<path class="series line-you" d="M${pts(1)}"/>`);
+    if (late) out.push(`<path class="series line-late" d="M${late.map((p) => x(p[0]).toFixed(1) + "," + y(p[1]).toFixed(1)).join(" L")}"/>`);
+    $("investLegend").innerHTML = `<span><i class="sw sw-growth"></i>Growth</span><span><i class="sw sw-paid"></i>Money you paid in</span>` +
+      (late ? `<span><i class="sw sw-late"></i>Starting 10 years later</span>` : "");
+    $("investChart").innerHTML = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Savings growth by age, split into money paid in and growth">${out.join("")}</svg>`;
+  }
+
+  inv.forEach((k) => $(k).addEventListener("input", updateInvest));
+  document.querySelectorAll(".presets button").forEach((btn) => btn.addEventListener("click", () => {
+    $("invReturn").value = btn.dataset.r;
+    updateInvest();
+  }));
+  updateInvest();
 
   // ---------- Pay gap chart (only years with a published ONS figure) ----------
   (function payChart() {

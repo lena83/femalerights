@@ -204,11 +204,42 @@
         <p class="chart-note">Share of ISA savers who chose a Stocks and Shares ISA.</p>
       </figure>
     </div>
-    <div class="callout">
-      <h3>Cash or shares? An example</h3>
-      <p id="growthText"></p>
-      <div class="growth" id="growthBars"></div>
-      <p class="chart-note">An illustration, not a promise: it assumes growth of 1% a year above inflation for cash and 4% for shares. Real returns go up and down, and shares can lose money, especially over short periods.</p>
+    <div class="calc" id="invest">
+      <div class="calc-head">
+        <h3>Try it: how much could your savings grow?</h3>
+        <p>Choose when you start, how much you put in each month and an average yearly return. The chart shows how much of the final amount is money you paid in, and how much is growth.</p>
+      </div>
+      <div class="calc-body">
+        <form class="calc-inputs" id="investForm">
+          <label for="invStart">Start saving at age <output id="invStartOut"></output></label>
+          <input type="range" id="invStart" min="16" max="60" step="1" value="18">
+          <label for="invEnd">Keep going until age <output id="invEndOut"></output></label>
+          <input type="range" id="invEnd" min="20" max="75" step="1" value="67">
+          <label for="invMonthly">Each month <output id="invMonthlyOut"></output></label>
+          <input type="range" id="invMonthly" min="10" max="1000" step="10" value="100">
+          <label for="invReturn">Average return a year <output id="invReturnOut"></output></label>
+          <input type="range" id="invReturn" min="0" max="8" step="0.5" value="4">
+          <div class="presets" role="group" aria-label="Example returns">
+            <button type="button" data-r="1">Cash · 1%</button>
+            <button type="button" data-r="3">Mixed · 3%</button>
+            <button type="button" data-r="5">Shares · 5%</button>
+          </div>
+        </form>
+        <div class="calc-out">
+          <div class="calc-figs">
+            <div><span class="fig-label">You pay in</span><span class="fig-num" id="invPaid"></span></div>
+            <div><span class="fig-label">Growth</span><span class="fig-num" id="invGrowth"></span></div>
+            <div><span class="fig-label" id="invTotalLabel">At 67</span><span class="fig-num accent" id="invTotal"></span></div>
+          </div>
+          <div class="inv-legend" id="investLegend"></div>
+          <div id="investChart"></div>
+          <p class="late" id="invLate"></p>
+        </div>
+      </div>
+      <details class="assumptions">
+        <summary>How this is worked out</summary>
+        <p>Amounts are in today's money: the return is how much faster than prices your savings grow each year. The same return is applied every month, which real investments never do: shares can rise or fall sharply from one year to the next, and you can get back less than you put in. The returns on the buttons are examples, not predictions. This is not financial advice.</p>
+      </details>
     </div>
     <p class="src">Sources: HMRC ISA statistics as analysed by AJ Bell (<cite>ISAs unpacked</cite>, 2025); Boring Money, <cite>Gender Investment Gap</cite> survey (2026).</p>
   </section>
@@ -217,13 +248,13 @@
     <h2>What you can do</h2>
     <p class="intro">None of this is fixed. Most of it comes from choices that can be planned for, and some from rules worth knowing early.</p>
     <ul class="actions">
-      <li><h3>Stay in your workplace pension</h3><p>From age 22, if you earn over £10,000 a year, your employer must put you in a pension and add at least 3% of your pay. If you opt out, you give up that free money.</p></li>
-      <li><h3>Start early</h3><p>Money saved in your twenties has the longest time to grow. Use the calculator above: the early years make the biggest difference.</p></li>
-      <li><h3>Know what jobs pay</h3><p>Look up salaries before you apply, ask about pay rises and promotions, and compare job offers. Big employers publish their gender pay gaps online every year.</p></li>
-      <li><h3>Share the caring</h3><p>Since 2015, parents can share parental leave. When both parents take time off and both work flexibly, neither loses all the pay progression.</p></li>
-      <li><h3>Claim Child Benefit</h3><p>If you ever stay at home with a child under 12, claim Child Benefit so your State Pension keeps building, even if you opt out of the payments.</p></li>
-      <li><h3>Learn how investing works</h3><p>A Stocks and Shares ISA is a simple way to start. From 18 to 39 you can also open a Lifetime ISA, where the government adds 25% to what you save towards a first home or later life.</p></li>
-      <li><h3>Keep pensions in the picture</h3><p>If a relationship ends, pensions can be shared. Check your own State Pension forecast for free on GOV.UK.</p></li>
+      <li><span class="act-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12a7 6 0 0 1 12.5-3.5H19l1 3-2 1.2V16h-2l-1 2h-2v-1.8H10V18H8l-1.3-3A6 6 0 0 1 5 12z"/><path d="M10 7.5h3"/><circle cx="15.5" cy="11" r=".9" fill="currentColor" stroke="none"/></svg></span><h3>Stay in your workplace pension</h3><p>From age 22, if you earn over £10,000 a year, your employer must put you in a pension and add at least 3% of your pay. If you opt out, you give up that free money.</p></li>
+      <li><span class="act-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21v-9"/><path d="M12 12C12 8 9 5.5 4.5 5.5c0 4 3 6.5 7.5 6.5z"/><path d="M12 15c0-4 3-6.5 7.5-6.5 0 4-3 6.5-7.5 6.5z"/></svg></span><h3>Start early</h3><p>Money saved in your teens and twenties has the longest time to grow. Try the savings calculator above and see what starting 10 years later does.</p></li>
+      <li><span class="act-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12V4h8l10 10-7 7z"/><circle cx="7.5" cy="8.5" r="1.5"/></svg></span><h3>Know what jobs pay</h3><p>Look up salaries before you apply, ask about pay rises and promotions, and compare job offers. Big employers publish their gender pay gaps online every year.</p></li>
+      <li><span class="act-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="7" r="3"/><circle cx="17" cy="9" r="2.5"/><path d="M2.5 20c0-3.5 2.5-6 5.5-6s5.5 2.5 5.5 6"/><path d="M14.5 20c0-2.8 1.2-4.8 2.5-4.8s4.5 1.5 4.5 4.8"/></svg></span><h3>Share the caring</h3><p>Since 2015, parents can share parental leave. When both parents take time off and both work flexibly, neither loses all the pay progression.</p></li>
+      <li><span class="act-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4"/><path d="M9 14l2 2 4-4.5"/></svg></span><h3>Claim Child Benefit</h3><p>If you ever stay at home with a child under 12, claim Child Benefit so your State Pension keeps building, even if you opt out of the payments.</p></li>
+      <li><span class="act-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 20h18"/><path d="M4 16l5-5 4 3 7-7"/><path d="M15 7h5v5"/></svg></span><h3>Learn how investing works</h3><p>A Stocks and Shares ISA is a simple way to start. From 18 to 39 you can also open a Lifetime ISA, where the government adds 25% to what you save towards a first home or later life.</p></li>
+      <li><span class="act-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="6"/><path d="M20 20l-4.6-4.6"/></svg></span><h3>Keep pensions in the picture</h3><p>If a relationship ends, pensions can be shared. Check your own State Pension forecast for free on GOV.UK.</p></li>
     </ul>
   </section>
 
