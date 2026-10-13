@@ -144,13 +144,14 @@
 
   // ---------- Rough pension calculator ----------
   const STATE_PENSION = 230.25 * 52;
-  const pIn = ["pAge", "pRetire", "pSalary", "pYou", "pEmp", "pPot", "pGrowth"];
+  const pIn = ["pAge", "pRetire", "pSalary", "pRaise", "pYou", "pEmp", "pPot", "pGrowth"];
   function updatePension() {
     const v = Object.fromEntries(pIn.map((k) => [k, +$(k).value]));
     const retire = Math.max(v.pRetire, v.pAge + 1);
     $("pAgeOut").textContent = v.pAge;
     $("pRetireOut").textContent = retire;
     $("pSalaryOut").textContent = gbp(v.pSalary);
+    $("pRaiseOut").textContent = v.pRaise + "%";
     $("pYouOut").textContent = v.pYou + "%";
     $("pEmpOut").textContent = v.pEmp + "%";
     $("pPotOut").textContent = gbp(v.pPot);
@@ -160,10 +161,12 @@
     const path = [[v.pAge, pot]];
     for (let age = v.pAge; age < retire; age++) {
       pot = pot * (1 + r) + pay * share;
-      pay *= 1.015;
+      pay *= 1 + v.pRaise / 100;
       path.push([age + 1, pot]);
     }
     drawPot(path, v.pAge, retire);
+    const totalPct = v.pYou + v.pEmp, perMonth = v.pSalary * totalPct / 100 / 12;
+    $("pContrib").innerHTML = `Total going in: <strong>${totalPct}% of your salary</strong>, about <strong>${gbp(perMonth)} a month</strong> now (you ${gbp(v.pSalary * v.pYou / 1200)}, your employer ${gbp(v.pSalary * v.pEmp / 1200)}). By ${retire} your salary would be about ${gbp(pay)} in today's money.`;
     // Lifelong-income rate: about 7% at 65, roughly 0.2 points lower or higher per year earlier or later.
     const rate = Math.max(0.04, 0.07 + (retire - 65) * 0.002);
     const income = pot * rate;

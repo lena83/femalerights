@@ -137,12 +137,15 @@
           <input type="range" id="pAge" min="18" max="60" step="1" value="22">
           <label for="pRetire">Retire at <output id="pRetireOut"></output></label>
           <input type="range" id="pRetire" min="55" max="75" step="1" value="67">
-          <label for="pSalary">Salary a year <output id="pSalaryOut"></output></label>
-          <input type="range" id="pSalary" min="10000" max="120000" step="1000" value="28000">
+          <label for="pSalary">Salary now, a year <output id="pSalaryOut"></output></label>
+          <input type="range" id="pSalary" min="10000" max="200000" step="1000" value="28000">
+          <label for="pRaise">Pay rise each year <output id="pRaiseOut"></output></label>
+          <input type="range" id="pRaise" min="0" max="5" step="0.5" value="2">
           <label for="pYou">You pay in <output id="pYouOut"></output></label>
           <input type="range" id="pYou" min="0" max="20" step="1" value="5">
           <label for="pEmp">Your employer pays in <output id="pEmpOut"></output></label>
           <input type="range" id="pEmp" min="0" max="15" step="1" value="3">
+          <p class="contrib" id="pContrib"></p>
           <label for="pPot">Pension saved so far <output id="pPotOut"></output></label>
           <input type="range" id="pPot" min="0" max="200000" step="1000" value="0">
           <label for="pGrowth">Average growth a year <output id="pGrowthOut"></output></label>
@@ -161,7 +164,7 @@
       </div>
       <details class="assumptions">
         <summary>How this is worked out</summary>
-        <p>A rough estimate in today's money, not financial advice. Contributions are a percentage of your whole salary (the legal minimum is 8% in total, with at least 3% from your employer, on earnings between £6,240 and £50,270). Your salary rises 1.5% a year above inflation. The pot is turned into a yearly income at about 7% a year if you retire at 65, a typical rate for a lifelong income (annuity) in 2025; the rate is lower if you retire earlier and higher if later. The full new State Pension is £230.25 a week in 2025–26, about £11,970 a year, and needs 35 years of National Insurance. It is only paid from State Pension age (currently 66, rising to 67 from 2026–28).</p>
+        <p>A rough estimate in today's money, not financial advice. Contributions are a percentage of your whole salary (the legal minimum is 8% in total, with at least 3% from your employer, on earnings between £6,240 and £50,270). Pay rises are counted above inflation, so 2% means your pay buys 2% more each year. The pot is turned into a yearly income at about 7% a year if you retire at 65, a typical rate for a lifelong income (annuity) in 2025; the rate is lower if you retire earlier and higher if later. The full new State Pension is £230.25 a week in 2025–26, about £11,970 a year, and needs 35 years of National Insurance. It is only paid from State Pension age (currently 66, rising to 67 from 2026–28).</p>
       </details>
     </div>
 

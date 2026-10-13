@@ -75,6 +75,7 @@
 @media (max-width: 800px) { .longer { grid-template-columns: 1fr; } }
 .presets { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
 .presets button { border: 1.5px solid var(--line); background: var(--surface); border-radius: 999px; padding: 5px 11px; font-size: .82rem; font-weight: 600; cursor: pointer; }
+.contrib { margin-top: 10px; padding: 10px 12px; background: var(--sunk); border-radius: 10px; font-size: .86rem; line-height: 1.45; }
 .income-bar { display: grid; gap: 8px; }
 .income-track { display: flex; height: 22px; border-radius: 99px; overflow: hidden; background: var(--sunk); }
 .seg { display: block; height: 100%; }
