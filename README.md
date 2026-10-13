@@ -17,6 +17,10 @@ For each country and each of 8 moments in time (1850, 1880, 1900, 1925, 1945, 19
 
 There are also overview visuals: a rights scoreboard (heatmap) where each square explains its rating, a line chart that switches between marriage age, children per woman, reading, women in the workforce and pay, and a timeline of when women won the vote.
 
+## Her Money (ages 13+)
+
+A second page, `her-money.html`, looks at money for women in the UK today: the pay gap, the cost of having children, pensions (with an interactive career-break calculator), divorce and wealth, plus practical tips. Every figure is cited on the page.
+
 ## How to open it
 
 No build step and no install. Open `index.html` in any web browser.
@@ -32,6 +36,7 @@ To put it online for free, turn on **GitHub Pages** (Settings → Pages → depl
 | `js/data.js` | **All the content**: rights, ages, clothes, stories. Edit this to correct or add facts. |
 | `js/figure.js` | Draws the paper-doll figures in SVG |
 | `js/app.js` | Interactivity: the year ruler, views, charts |
+| `her-money.html`, `css/money.css`, `js/money.js` | The Her Money page, its charts and pension calculator |
 
 ## A note on accuracy
 

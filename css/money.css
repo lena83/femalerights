@@ -1,0 +1,89 @@
+/* "Her Money" page. Builds on the tokens in style.css.
+   Layout: headline gap tiles → a dated history timeline → five numbered sections
+   (text beside one chart each) → the pension calculator → action cards. */
+:root { --women: var(--accent); --men: var(--c-uk); }
+
+.money { display: grid; gap: 64px; padding-bottom: 24px; }
+.money h2 { font-size: clamp(1.7rem, 3.6vw, 2.4rem); }
+.money h3 { font-family: var(--body); font-weight: 700; font-size: 1.05rem; margin: 0; }
+.block { display: grid; gap: 20px; }
+.intro { max-width: 68ch; color: var(--muted); font-size: 1.08rem; }
+.prose { display: grid; gap: 12px; max-width: 64ch; min-width: 0; }
+.two { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 32px; align-items: start; }
+.src { font-size: .82rem; color: var(--muted); max-width: 90ch; }
+.src cite { font-style: italic; }
+
+/* Headline tiles: these numbers are the point of the page */
+.tiles { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; margin-top: 8px; }
+.tile {
+  display: grid; gap: 6px; align-content: start; padding: 16px; border-radius: var(--radius);
+  background: var(--surface); border: 1px solid var(--line); color: var(--ink); text-decoration: none;
+  transition: border-color .2s;
+}
+.tile:hover { border-color: var(--accent); }
+.tile-num { font: 400 2.4rem/1 var(--display); color: var(--accent); font-variant-numeric: tabular-nums; }
+.tile-label { font-size: .92rem; line-height: 1.35; }
+.tile-src { font: 500 11px/1.3 var(--mono); letter-spacing: .04em; color: var(--muted); text-transform: uppercase; }
+
+/* Timeline */
+.timeline { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 0 24px; }
+.timeline li { display: grid; grid-template-columns: 58px 1fr; gap: 12px; padding: 12px 0; border-top: 1px solid var(--line); font-size: .93rem; }
+.timeline .yr { font: 500 15px/1.4 var(--mono); color: var(--accent); font-variant-numeric: tabular-nums; }
+
+/* Chart cards */
+.chart-card { margin: 0; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 16px; display: grid; gap: 10px; min-width: 0; }
+.chart-card figcaption { font-weight: 700; font-size: .95rem; }
+.chart-note { font-size: .8rem; color: var(--muted); }
+.chart-card svg, .calc svg { display: block; width: 100%; height: auto; }
+.chart-card text, .calc text { fill: var(--muted); font: 500 12px var(--mono); }
+.chart-card .grid, .calc .grid { stroke: var(--line); }
+.chart-card .val { fill: var(--ink); font: 700 13px var(--body); }
+
+.gapbars, .potbars { display: grid; gap: 12px; }
+.bar-row { display: grid; gap: 4px; }
+.bar-label { display: flex; justify-content: space-between; gap: 8px; font-size: .88rem; }
+.bar-label b { font-variant-numeric: tabular-nums; }
+.bar-track { height: 16px; background: var(--sunk); border-radius: 99px; overflow: hidden; }
+.bar-fill { height: 100%; border-radius: 99px; background: var(--women); }
+.bar-fill.men { background: var(--men); }
+
+.callout { background: var(--accent-soft); border-radius: var(--radius); padding: 18px 20px; display: grid; gap: 8px; max-width: 90ch; }
+
+/* Calculator */
+.calc { background: var(--surface); border: 1.5px solid var(--accent); border-radius: var(--radius); padding: 20px; display: grid; gap: 18px; }
+.calc-head { display: grid; gap: 6px; }
+.calc-head p { color: var(--muted); max-width: 70ch; }
+.calc-body { display: grid; grid-template-columns: minmax(0, 340px) minmax(0, 1fr); gap: 28px; align-items: start; }
+.calc-inputs { display: grid; gap: 4px; }
+.calc-inputs label { display: flex; justify-content: space-between; gap: 8px; font-size: .9rem; font-weight: 600; margin-top: 8px; }
+.calc-inputs output { font: 500 14px var(--mono); color: var(--accent); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.calc-inputs input[type="range"] { width: 100%; accent-color: var(--accent); }
+.calc-out { display: grid; gap: 12px; min-width: 0; }
+.calc-figs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.calc-figs > div { background: var(--sunk); border-radius: 10px; padding: 10px 12px; display: grid; gap: 2px; }
+.fig-label { font-size: .78rem; color: var(--muted); }
+.fig-num { font: 400 1.5rem/1.1 var(--display); font-variant-numeric: tabular-nums; }
+.fig-num.accent { color: var(--accent); }
+.calc .line-full { stroke: var(--men); }
+.calc .line-you { stroke: var(--women); }
+.calc .series { fill: none; stroke-width: 2.5; stroke-linejoin: round; }
+.calc .break-band { fill: var(--sunk); }
+.calc .lg { font: 600 12px var(--body); }
+.assumptions { font-size: .86rem; color: var(--muted); }
+.assumptions summary { cursor: pointer; font-weight: 600; color: var(--ink); }
+.assumptions p { margin-top: 8px; max-width: 80ch; }
+
+/* Actions */
+.actions { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; }
+.actions li { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 16px; display: grid; gap: 6px; align-content: start; font-size: .93rem; }
+
+.foot a { color: var(--accent); }
+
+@media (max-width: 1000px) {
+  .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .two, .calc-body { grid-template-columns: 1fr; }
+}
+@media (max-width: 480px) {
+  .calc-figs { grid-template-columns: 1fr; }
+  .tile-num { font-size: 2rem; }
+}

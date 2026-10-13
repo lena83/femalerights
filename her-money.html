@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Her Money</title>
+<meta name="description" content="Why women in the UK end up with less money than men: the pay gap, the cost of having children, pensions, divorce and wealth, and what young women can do about it. For ages 13 and up.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Figtree:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/money.css">
+</head>
+<body>
+<!--BODY-->
+<nav class="site-nav wrap" aria-label="Pages">
+  <a href="index.html">Her Story Through Time</a>
+  <a href="her-money.html" aria-current="page">Her Money <span class="age-tag">13+</span></a>
+</nav>
+
+<header class="hero wrap">
+  <p class="eyebrow">United Kingdom · for ages 13 and up</p>
+  <h1>Her Money</h1>
+  <p class="lede">Women in the UK can now do every job, own every kind of property and vote on equal terms. So why do they still end up with less money than men, especially by the time they retire? This page follows the money through a woman's life, and ends with what you can do about it.</p>
+</header>
+
+<main class="wrap money">
+  <section class="tiles" aria-label="The gaps at a glance">
+    <a class="tile" href="#pay">
+      <span class="tile-num">6.9%</span>
+      <span class="tile-label">pay gap for full-time workers</span>
+      <span class="tile-src">ONS, 2025</span>
+    </a>
+    <a class="tile" href="#children">
+      <span class="tile-num">33%</span>
+      <span class="tile-label">lower hourly pay for mothers, 12 years after their first child</span>
+      <span class="tile-src">IFS, 2016</span>
+    </a>
+    <a class="tile" href="#pensions">
+      <span class="tile-num">48%</span>
+      <span class="tile-label">smaller private pensions for women aged 55–59</span>
+      <span class="tile-src">DWP, 2025</span>
+    </a>
+    <a class="tile" href="#divorce">
+      <span class="tile-num">50%</span>
+      <span class="tile-label">typical fall in women's income the year after divorce (men: 30%)</span>
+      <span class="tile-src">Legal &amp; General survey, 2025</span>
+    </a>
+    <a class="tile" href="#wealth">
+      <span class="tile-num">35%</span>
+      <span class="tile-label">less wealth on average than men</span>
+      <span class="tile-src">ONS data, Women's Budget Group</span>
+    </a>
+  </section>
+
+  <section class="block" id="history">
+    <h2>How we got here</h2>
+    <p class="intro">For most of history, the law treated a married woman's money as her husband's. Many of the rules that held women back financially changed within the lifetime of your grandparents.</p>
+    <ol class="timeline" id="timeline"></ol>
+  </section>
+
+  <section class="block" id="pay">
+    <h2>1. The pay gap</h2>
+    <div class="two">
+      <div class="prose">
+        <p>The gender pay gap compares the typical hourly pay of all women and all men. It is <strong>not</strong> the same as being paid less for the same job, which has been illegal since the Equal Pay Act of 1970. Instead, it shows that women are more often in lower-paid jobs and less often in senior ones.</p>
+        <p>For full-time workers the gap has fallen from <strong>17.4% in 1997</strong> to <strong>6.9% in 2025</strong>. Women in full-time jobs earned a typical £18.87 an hour, compared with £20.27 for men.</p>
+        <p>The gap is much bigger once part-time work is included, because part-time jobs usually pay less per hour. About <strong>4 in 10</strong> working women work part time, compared with about <strong>1 in 7</strong> men.</p>
+      </div>
+      <figure class="chart-card">
+        <figcaption>Gender pay gap, full-time employees (median hourly pay)</figcaption>
+        <div id="payChart"></div>
+        <p class="chart-note">Only years with published figures are marked; the line between 1997 and 2018 joins them directly.</p>
+      </figure>
+    </div>
+    <p class="src">Sources: ONS, <cite>Gender pay gap in the UK: 2025</cite>; earlier ONS releases as reported by the Press Association (2018, 2019, 2023).</p>
+  </section>
+
+  <section class="block" id="children">
+    <h2>2. The cost of having children</h2>
+    <div class="two">
+      <div class="prose">
+        <p>Before they have children, women and men earn fairly similar amounts. The big split comes <strong>after the first baby</strong>. Economists call this the <em>child penalty</em> or <em>motherhood penalty</em>.</p>
+        <p>Researchers at the Institute for Fiscal Studies followed thousands of British parents. Mothers' hourly pay didn't drop straight away. Instead, it stopped growing: mothers who switched to part-time work missed out on the pay rises and promotions that come with experience. Fathers' pay kept climbing.</p>
+        <p>By the time their first child turns 20, mothers have on average spent <strong>4 fewer years</strong> in paid work than fathers. Those missing years also mean missing pension savings, which is why the pension gap below is so large.</p>
+      </div>
+      <figure class="chart-card">
+        <figcaption>How much less women earn per hour than men</figcaption>
+        <div class="gapbars" id="childBars"></div>
+        <p class="chart-note">The gap grows year by year after a first child is born.</p>
+      </figure>
+    </div>
+    <div class="callout">
+      <h3>Fewer, later babies</h3>
+      <p>In 2024, women in England and Wales had on average <strong>1.41 children</strong>, the lowest on record, and the average mother was <strong>31</strong>. People give many reasons for having children later or having fewer, including the cost of housing and childcare. From 2024–25, working parents in England became able to get many more hours of free childcare, and the average cost of a part-time nursery place for a child under two fell by more than half.</p>
+    </div>
+    <p class="src">Sources: Institute for Fiscal Studies, <cite>The gender wage gap</cite> (Costa Dias, Elming, Joyce, 2016); ONS, <cite>Births in England and Wales: 2024</cite>; Coram, <cite>Childcare Survey 2025</cite>.</p>
+  </section>
+
+  <section class="block" id="pensions">
+    <h2>3. Pensions: where the gaps add up</h2>
+    <div class="two">
+      <div class="prose">
+        <p>A pension is money you save while you work so you have an income when you are old. Every year of lower pay, part-time work or time off adds up, and money in a pension also grows over time, so early years count the most.</p>
+        <p>By the time they are 55 to 59, women typically have <strong>£81,000</strong> in private pensions and men <strong>£156,000</strong>, a gap of <strong>48%</strong>. Turned into a yearly income, that is roughly £6,000 for women against £11,000 for men. Including people with no private pension at all, the gap is 62%.</p>
+        <p>The gap is much smaller for young workers: about 22% at ages 25 to 29. It grows as women take time out for children.</p>
+      </div>
+      <figure class="chart-card">
+        <figcaption>Typical private pension pot, ages 55–59</figcaption>
+        <div class="potbars" id="potBars"></div>
+      </figure>
+    </div>
+
+    <div class="calc" id="calc">
+      <div class="calc-head">
+        <h3>Try it: what does a career break do to a pension?</h3>
+        <p>Move the sliders to see how taking time off and then working part time changes the pension pot of someone who starts work at 22 and retires at 67.</p>
+      </div>
+      <div class="calc-body">
+        <form class="calc-inputs" id="calcForm">
+          <label for="salary">Starting salary at 22 <output id="salaryOut"></output></label>
+          <input type="range" id="salary" min="15000" max="60000" step="1000" value="26000">
+          <label for="breakAge">Career break starts at age <output id="breakAgeOut"></output></label>
+          <input type="range" id="breakAge" min="25" max="45" step="1" value="31">
+          <label for="breakYears">Years out of work <output id="breakYearsOut"></output></label>
+          <input type="range" id="breakYears" min="0" max="15" step="1" value="3">
+          <label for="ptYears">Then years working part time <output id="ptYearsOut"></output></label>
+          <input type="range" id="ptYears" min="0" max="20" step="1" value="8">
+          <label for="ptShare">Part-time hours, as a share of full time <output id="ptShareOut"></output></label>
+          <input type="range" id="ptShare" min="20" max="90" step="10" value="60">
+        </form>
+        <div class="calc-out">
+          <div class="calc-figs">
+            <div><span class="fig-label">No break</span><span class="fig-num" id="potFull"></span></div>
+            <div><span class="fig-label">With your choices</span><span class="fig-num accent" id="potYou"></span></div>
+            <div><span class="fig-label">Difference</span><span class="fig-num" id="potDiff"></span></div>
+          </div>
+          <div id="calcChart"></div>
+        </div>
+      </div>
+      <details class="assumptions">
+        <summary>How this is worked out</summary>
+        <p>This is a simplified example in today's money, not financial advice. It assumes the legal minimum workplace pension: 8% of earnings between £6,240 and £50,270 a year (at least 3% from the employer). Pay rises 1.5% a year above inflation while you work but does not grow during a break, and part-time pay is the full-time salary times your hours. Savings grow 3% a year above inflation. Real pensions, pay and investment returns vary.</p>
+      </details>
+    </div>
+
+    <div class="callout">
+      <h3>The State Pension</h3>
+      <p>On top of any workplace pension, the government pays a State Pension. In 2025–26 the full amount is <strong>£230.25 a week</strong>. To get it all you need <strong>35 years</strong> of National Insurance contributions or credits; with fewer than 10 you get nothing. If you stay at home to look after a child under 12, you can still get credits, but only if you <strong>claim Child Benefit</strong>. You can claim and choose not to receive the payments, for example if you or your partner earn over £60,000 and would pay the money back in tax.</p>
+    </div>
+    <p class="src">Sources: Department for Work and Pensions, <cite>The gender pensions gap in private pensions</cite> (2023) and the 2025 research report published with the Pensions Commission; Age UK, <cite>State Pension</cite> factsheet 2025–26; GOV.UK guidance on Child Benefit and National Insurance credits; HM Treasury, High Income Child Benefit Charge threshold (2024).</p>
+  </section>
+
+  <section class="block" id="divorce">
+    <h2>4. Divorce</h2>
+    <div class="two">
+      <div class="prose">
+        <p>When a couple splits up, the person who earned less, or who stepped back from work to look after children, is usually hit harder. That is more often the woman.</p>
+        <p>In a 2025 survey of divorced people, women said their income fell by about <strong>half</strong> in the year after divorce, compared with about <strong>30%</strong> for men. About 1 in 4 women said they were struggling financially, against 1 in 6 men.</p>
+        <p>Pensions are often forgotten. Since 2000, courts in England and Wales have been able to split a pension between divorcing partners. Yet in one study of 369 divorce settlements, <strong>80%</strong> involved at least one pension, but only <strong>14%</strong> included an order to share it.</p>
+      </div>
+      <figure class="chart-card">
+        <figcaption>Typical fall in income in the year after divorce</figcaption>
+        <div class="gapbars" id="divorceBars"></div>
+        <p class="chart-note">Based on what people reported in a survey, not official statistics.</p>
+      </figure>
+    </div>
+    <p class="src">Sources: Legal &amp; General, <cite>The Divorce Gap</cite> (2025, survey by Opinium); Woodward and Sefton, <cite>Pensions on Divorce</cite> (Cardiff University, Nuffield Foundation, 2014).</p>
+  </section>
+
+  <section class="block" id="wealth">
+    <h2>5. Wealth: what you own</h2>
+    <div class="two">
+      <div class="prose">
+        <p>Wealth is everything you own (savings, pensions, property and investments) minus what you owe. It builds up over a lifetime, so all the gaps above end up here.</p>
+        <p>Men in Great Britain have on average <strong>£92,762 more</strong> wealth than women, a gap of <strong>35%</strong>. The gap is small for people aged 25 to 34 and grows to about <strong>42%</strong> by age 64.</p>
+        <p>The kind of wealth differs too. More than half of women's wealth is property and possessions, often shared with a partner, while men hold far more pensions and investments. Men own nearly <strong>three times</strong> as much in UK shares as women.</p>
+      </div>
+      <figure class="chart-card">
+        <figcaption>Average wealth gap between women and men, by age</figcaption>
+        <div class="gapbars" id="wealthBars"></div>
+      </figure>
+    </div>
+    <p class="src">Source: Women's Budget Group analysis of the ONS Wealth and Assets Survey, April 2018 to March 2020 (published 2023).</p>
+  </section>
+
+  <section class="block" id="action">
+    <h2>What you can do</h2>
+    <p class="intro">None of this is fixed. Most of it comes from choices that can be planned for, and some from rules worth knowing early.</p>
+    <ul class="actions">
+      <li><h3>Stay in your workplace pension</h3><p>From age 22, if you earn over £10,000 a year, your employer must put you in a pension and add at least 3% of your pay. If you opt out, you give up that free money.</p></li>
+      <li><h3>Start early</h3><p>Money saved in your twenties has the longest time to grow. Use the calculator above: the early years make the biggest difference.</p></li>
+      <li><h3>Know what jobs pay</h3><p>Look up salaries before you apply, ask about pay rises and promotions, and compare job offers. Big employers publish their gender pay gaps online every year.</p></li>
+      <li><h3>Share the caring</h3><p>Since 2015, parents can share parental leave. When both parents take time off and both work flexibly, neither loses all the pay progression.</p></li>
+      <li><h3>Claim Child Benefit</h3><p>If you ever stay at home with a child under 12, claim Child Benefit so your State Pension keeps building, even if you opt out of the payments.</p></li>
+      <li><h3>Keep pensions in the picture</h3><p>If a relationship ends, pensions can be shared. Check your own State Pension forecast for free on GOV.UK.</p></li>
+    </ul>
+  </section>
+
+  <section class="panel sources">
+    <h2>About this page</h2>
+    <p>This page is for teenagers and young adults. It explains averages for the whole UK; every person's situation is different, and nothing here is financial advice. Figures were checked against the latest published sources in October 2026, and each section lists where its numbers come from.</p>
+    <p><strong>Further reading:</strong> Annabelle Williams, <cite>Why Women Are Poorer Than Men: And What We Can Do About It</cite> (2021), a readable book on the same subject.</p>
+  </section>
+</main>
+
+<footer class="wrap foot">
+  <p><a href="index.html">← Back to Her Story Through Time</a></p>
+</footer>
+<!--/BODY-->
+<script src="js/money.js"></script>
+</body>
+</html>
