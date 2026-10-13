@@ -59,6 +59,51 @@
     { label: "All pensioners", value: 16, men: true }
   ], 30, "%");
 
+  // Warwick Business School / Barclays (2018): yearly return above the FTSE 100.
+  bars("perfBars", [
+    { label: "Women", value: 1.94, text: "+1.94%" },
+    { label: "Men", value: 0.14, men: true, text: "+0.14%" }
+  ], 2.2, "%");
+
+  // ---------- Money quiz (Lusardi & Mitchell "Big Three", adapted for the UK) ----------
+  const QUIZ = [
+    { q: "You put £100 in a savings account paying 2% interest a year and leave it there. After 5 years, how much will you have?",
+      options: ["More than £102", "Exactly £102", "Less than £102"], answer: 0,
+      why: "You earn 2% every year, and from the second year you also earn interest on your interest. After 5 years you'd have about £110. This snowball effect is called compound interest." },
+    { q: "Your savings earn 1% interest a year, and prices rise by 2% a year. After one year, could your money buy more, the same, or less than today?",
+      options: ["More", "The same", "Less"], answer: 2,
+      why: "Prices rose faster than your savings grew, so the same money buys less. This is why money left in cash for many years can quietly lose value." },
+    { q: "True or false: buying shares in just one company is usually safer than buying a fund that holds shares in many companies.",
+      options: ["True", "False"], answer: 1,
+      why: "If one company struggles, a fund spread over hundreds of companies barely notices. Spreading your money (diversifying) lowers the risk, which is why index funds and ETFs are popular." }
+  ];
+  $("quizBody").innerHTML = QUIZ.map((item, i) => `<fieldset class="q" data-i="${i}">
+      <legend><span class="q-num">${i + 1}</span>${item.q}</legend>
+      <div class="q-opts">${item.options.concat("I don't know").map((o, j) => `<button type="button" data-j="${j}">${o}</button>`).join("")}</div>
+      <p class="q-why" hidden></p>
+    </fieldset>`).join("") + `<p class="q-score" id="quizScore" aria-live="polite"></p>`;
+  const answered = {};
+  $("quizBody").addEventListener("click", (e) => {
+    const btn = e.target.closest(".q-opts button");
+    if (!btn) return;
+    const set = btn.closest(".q"), i = +set.dataset.i, j = +btn.dataset.j, item = QUIZ[i];
+    set.querySelectorAll("button").forEach((b) => {
+      b.classList.remove("right", "wrong", "picked");
+      if (+b.dataset.j === item.answer) b.classList.add("right");
+    });
+    btn.classList.add("picked");
+    const dontKnow = j === item.options.length;
+    if (j !== item.answer && !dontKnow) btn.classList.add("wrong");
+    const why = set.querySelector(".q-why");
+    why.hidden = false;
+    why.innerHTML = (j === item.answer ? "<strong>Correct!</strong> " : dontKnow ? "<strong>Here's the answer.</strong> " : "<strong>Not quite.</strong> ") + item.why;
+    answered[i] = j === item.answer;
+    const n = Object.keys(answered).length, right = Object.values(answered).filter(Boolean).length;
+    $("quizScore").textContent = n === QUIZ.length
+      ? `You got ${right} out of 3. ${right === 3 ? "In the original US surveys, only about a third of adults got all three right." : "Now you know all three: that already puts you ahead of many adults."}`
+      : "";
+  });
+
   // Legal & General 2025 survey.
   bars("divorceBars", [
     { label: "Women", value: 50 },

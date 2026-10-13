@@ -89,6 +89,19 @@ details.calc > .calc-head:hover .calc-toggle { background: var(--accent-soft); }
 @media (max-width: 800px) { .longer { grid-template-columns: 1fr; } }
 .poverty { margin-top: 8px; }
 .poverty h3 { font-size: 1.15rem; }
+.quiz { display: grid; gap: 16px; }
+.q { border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; margin: 0; display: grid; gap: 10px; min-width: 0; }
+.q legend { font-weight: 600; padding: 0; display: flex; gap: 10px; align-items: baseline; float: left; width: 100%; }
+.q legend + * { clear: both; }
+.q-num { flex: none; font: 500 13px var(--mono); color: var(--accent); background: var(--accent-soft); border-radius: 99px; width: 24px; height: 24px; display: inline-grid; place-items: center; }
+.q-opts { display: flex; flex-wrap: wrap; gap: 8px; }
+.q-opts button { border: 1.5px solid var(--line); background: var(--surface); border-radius: 999px; padding: 7px 14px; font-size: .9rem; font-weight: 600; cursor: pointer; }
+.q-opts button:hover { border-color: var(--accent); }
+.q-opts button.right { background: var(--yes-bg); border-color: var(--yes); color: var(--yes); }
+.q-opts button.wrong { background: var(--no-bg); border-color: var(--no); color: var(--no); }
+.q-opts button.picked:not(.right):not(.wrong) { border-color: var(--ink); }
+.q-why { font-size: .9rem; background: var(--sunk); border-radius: 8px; padding: 10px 12px; }
+.q-score { font-weight: 700; }
 .presets { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
 .presets button { border: 1.5px solid var(--line); background: var(--surface); border-radius: 999px; padding: 5px 11px; font-size: .82rem; font-weight: 600; cursor: pointer; }
 .contrib { margin-top: 10px; padding: 10px 12px; background: var(--sunk); border-radius: 10px; font-size: .86rem; line-height: 1.45; }
