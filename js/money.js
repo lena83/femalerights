@@ -202,6 +202,83 @@
   }));
   updateInvest();
 
+  // ---------- "What you can do now" checklist ----------
+  const ICON = {
+    parent: '<path d="M12 21s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 5.6-7 10-7 10z"/>',
+    teen: '<path d="M12 3l9 4.5-9 4.5-9-4.5z"/><path d="M6 10v5c0 1.7 2.7 3 6 3s6-1.3 6-3v-5"/>',
+    adult: '<rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2"/><path d="M3 13h18"/>',
+    family: '<circle cx="9" cy="7" r="3"/><circle cx="17" cy="10" r="2"/><path d="M3 20c0-3.5 2.7-6 6-6s6 2.5 6 6"/><path d="M15 20c0-2.5 1-4 2-4s4 1 4 4"/>'
+  };
+  const svg = (k) => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICON[k]}</svg>`;
+  const STAGES = [
+    { id: "parent", label: "For parents", items: [
+      { t: "Open a Junior Stocks and Shares ISA", d: "A parent or guardian opens it, and then anyone (grandparents too) can pay in, up to £9,000 a year in total. Your daughter can take control at 16 and use the money at 18, all tax-free. £50 a month from birth, growing at 5% a year, could be worth about £17,300 at 18 from £10,800 paid in.", link: ["GOV.UK: Junior ISAs", "https://www.gov.uk/junior-individual-savings-accounts"] },
+      { t: "Think about a junior pension", d: "You can pay up to £2,880 a year into a child's pension and the government adds 20%, making £3,600. The money is locked until at least 57, so it has decades to grow." },
+      { t: "Ask relatives to give savings instead of toys", d: "A birthday or Christmas gift paid into a Junior ISA can grow for 18 years." },
+      { t: "Talk about money at home", d: "Pocket money, saving up for something, comparing prices: talking about money early makes it feel normal, not scary." }
+    ]},
+    { id: "teen", label: "Age 13–17", items: [
+      { t: "Open a savings account in your own name", d: "Many banks offer accounts for under-18s. Saving a little regularly is a habit worth more than the amount." },
+      { t: "Check for a Child Trust Fund", d: "If you were born between 1 September 2002 and 2 January 2011, the government opened an account for you with at least £250. Hundreds of thousands are unclaimed, holding about £2,200 on average. You can take control at 16 and withdraw at 18, and finding it is free.", link: ["GOV.UK: Find a Child Trust Fund", "https://www.gov.uk/child-trust-funds/find-a-child-trust-fund"] },
+      { t: "Take charge of your Junior ISA at 16", d: "If your family opened one for you, you can manage it yourself from 16." },
+      { t: "Keep your National Insurance number safe", d: "You receive it just before you turn 16. You'll need it for your first job, your pension and your State Pension record." },
+      { t: "Learn the three money basics", d: "Compound interest, inflation and spreading risk. Try the three-question quiz above." , link: ["Take the quiz", "#quiz"] }
+    ]},
+    { id: "adult", label: "18 and working", items: [
+      { t: "Stay in your workplace pension", d: "From 22, if you earn over £10,000, your employer must enrol you and add at least 3% of your pay. Opting out means giving up free money." },
+      { t: "Ask if your employer matches extra contributions", d: "Many employers pay in more than the minimum, or match what you put in up to a limit. Ask HR: \"If I pay in more, will you pay in more too?\" It's one of the best deals you'll ever get." },
+      { t: "Open a Stocks and Shares ISA", d: "You can save or invest up to £20,000 a year tax-free across your ISAs. From April 2027, people under 65 can only put £12,000 a year into cash ISAs, so investing will matter more." },
+      { t: "Consider a Lifetime ISA", d: "From 18 to 39 you can pay in up to £4,000 a year and the government adds 25% (up to £1,000 a year), towards a first home costing up to £450,000 or for later life. Take it out for anything else and you pay a 25% charge. The government plans to replace it, so check the latest rules.", link: ["GOV.UK: Lifetime ISA", "https://www.gov.uk/lifetime-isa"] },
+      { t: "Check your State Pension forecast", d: "It's free and takes a few minutes. It shows how many years of National Insurance you have and any gaps.", link: ["GOV.UK: Check your State Pension", "https://www.gov.uk/check-state-pension"] },
+      { t: "Keep track of every workplace pension", d: "Each new job may start a new pension. Write each one down, and use the free government service to find any you've lost.", link: ["GOV.UK: Find a lost pension", "https://www.gov.uk/find-lost-pension"] },
+      { t: "Build a cash safety net", d: "A few months of essential costs in an easy-access savings account means a surprise bill never forces you to sell investments at a bad time." }
+    ]},
+    { id: "family", label: "Starting a family", items: [
+      { t: "Claim Child Benefit, even if you opt out of the money", d: "While your child is under 12, claiming gives you National Insurance credits so your State Pension keeps building. You can claim and choose not to be paid if you or your partner earn over £60,000.", link: ["GOV.UK: Child Benefit", "https://www.gov.uk/child-benefit"] },
+      { t: "Check your pension during maternity leave", d: "During paid maternity leave your employer should keep paying into your workplace pension as if you were earning your normal pay. Check that it does." },
+      { t: "Share the caring", d: "Shared parental leave lets both parents take time off. When both work flexibly, neither loses all their pay progression." },
+      { t: "Keep your own pension growing if you stop work", d: "Someone with no earnings can still have up to £2,880 a year paid into a personal pension, topped up to £3,600 by the government. A partner can pay in for you." },
+      { t: "Remember pensions if you separate", d: "Pensions can be shared on divorce, but most settlements leave them out. Make sure yours doesn't." }
+    ]}
+  ];
+  const done = (() => { try { return JSON.parse(localStorage.getItem("hm-done") || "{}"); } catch (e) { return {}; } })();
+  const save = () => { try { localStorage.setItem("hm-done", JSON.stringify(done)); } catch (e) {} };
+  let stage = "parent";
+  $("stageTabs").innerHTML = STAGES.map((st) => `<button type="button" role="tab" data-s="${st.id}"><span class="act-icon">${svg(st.id)}</span>${st.label}</button>`).join("");
+  function renderChecklist() {
+    const st = STAGES.find((x) => x.id === stage);
+    [...$("stageTabs").children].forEach((b) => b.setAttribute("aria-selected", String(b.dataset.s === stage)));
+    $("checklist").innerHTML = st.items.map((it, i) => {
+      const id = `${st.id}-${i}`;
+      const link = it.link ? ` <a href="${it.link[1]}"${it.link[1].startsWith("#") ? "" : ' target="_blank" rel="noopener"'}>${it.link[0]} →</a>` : "";
+      return `<label class="check-item${done[id] ? " is-done" : ""}" for="chk-${id}">
+        <input type="checkbox" id="chk-${id}" data-id="${id}"${done[id] ? " checked" : ""}>
+        <span class="box" aria-hidden="true"></span>
+        <span class="ci-text"><strong>${it.t}</strong><span>${it.d}${link}</span></span>
+      </label>`;
+    }).join("");
+    const n = st.items.filter((_, i) => done[`${st.id}-${i}`]).length;
+    $("progress").textContent = `${n} of ${st.items.length} done${n === st.items.length ? ". Brilliant!" : ""}`;
+  }
+  $("stageTabs").addEventListener("click", (e) => {
+    const b = e.target.closest("button[data-s]");
+    if (b) { stage = b.dataset.s; renderChecklist(); }
+  });
+  // Links to a closed "Try it" box open it first.
+  document.addEventListener("click", (e) => {
+    const a = e.target.closest('a[href^="#"]');
+    const target = a && document.getElementById(a.getAttribute("href").slice(1));
+    if (target && target.tagName === "DETAILS") target.open = true;
+  });
+  $("checklist").addEventListener("change", (e) => {
+    const id = e.target.dataset.id;
+    if (!id) return;
+    if (e.target.checked) done[id] = true; else delete done[id];
+    save();
+    renderChecklist();
+  });
+  renderChecklist();
+
   // ---------- Pay gap chart (only years with a published ONS figure) ----------
   (function payChart() {
     const pts = [[1997, 17.4], [2018, 8.6], [2019, 8.9], [2022, 7.6], [2023, 7.7], [2024, 7.1], [2025, 6.9]];

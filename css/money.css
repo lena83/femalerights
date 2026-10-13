@@ -130,6 +130,28 @@ details.calc > .calc-head:hover .calc-toggle { background: var(--accent-soft); }
 .assumptions summary { cursor: pointer; font-weight: 600; color: var(--ink); }
 .assumptions p { margin-top: 8px; max-width: 80ch; }
 
+/* "What you can do now" checklist */
+.stage-tabs { display: flex; flex-wrap: wrap; gap: 8px; }
+.stage-tabs button { display: inline-flex; align-items: center; gap: 10px; border: 1.5px solid var(--line); background: var(--surface); border-radius: 14px; padding: 6px 16px 6px 6px; font-weight: 700; font-size: .95rem; cursor: pointer; }
+.stage-tabs button .act-icon { width: 36px; height: 36px; margin: 0; border-radius: 10px; }
+.stage-tabs button .act-icon svg { width: 22px; height: 22px; }
+.stage-tabs button:hover { border-color: var(--accent); }
+.stage-tabs button[aria-selected="true"] { border-color: var(--accent); background: var(--accent-soft); color: var(--accent); }
+.checklist { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 420px), 1fr)); gap: 10px; }
+.check-item { display: grid; grid-template-columns: auto 1fr; gap: 12px; align-items: start; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 14px 16px; cursor: pointer; transition: border-color .2s; }
+.check-item:hover { border-color: var(--accent); }
+.check-item input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.check-item .box { width: 22px; height: 22px; border-radius: 6px; border: 2px solid var(--line); margin-top: 1px; display: grid; place-items: center; }
+.check-item input:focus-visible + .box { outline: 3px solid var(--accent); outline-offset: 2px; }
+.check-item.is-done .box { background: var(--accent); border-color: var(--accent); }
+.check-item.is-done .box::after { content: ""; width: 6px; height: 11px; border: solid var(--on-accent); border-width: 0 2.5px 2.5px 0; transform: translateY(-1px) rotate(45deg); }
+.ci-text { display: grid; gap: 4px; font-size: .9rem; min-width: 0; }
+.ci-text strong { font-size: 1rem; }
+.check-item.is-done .ci-text strong { text-decoration: line-through; text-decoration-color: var(--accent); }
+.ci-text a { color: var(--accent); font-weight: 600; white-space: nowrap; }
+.progress { font-weight: 700; color: var(--accent); }
+@media (max-width: 480px) { .checklist { grid-template-columns: 1fr; } }
+
 /* Actions */
 .actions { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; }
 .actions li { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 16px; display: grid; gap: 6px; align-content: start; font-size: .93rem; }
