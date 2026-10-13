@@ -51,6 +51,14 @@
     { label: "Men: £156,000 over 18.5 years", value: perM, men: true, text: gbp(Math.round(perM / 100) * 100) + " a year" }
   ], perM * 1.05, "£");
 
+  // DWP HBAI 2022/23 via Age UK (2024): relative poverty after housing costs.
+  bars("povertyBars", [
+    { label: "Single women", value: 23 },
+    { label: "Single men", value: 20, men: true },
+    { label: "Couples", value: 13, men: true },
+    { label: "All pensioners", value: 16, men: true }
+  ], 30, "%");
+
   // Legal & General 2025 survey.
   bars("divorceBars", [
     { label: "Women", value: 50 },

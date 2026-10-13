@@ -87,6 +87,8 @@ details.calc > .calc-head:hover .calc-toggle { background: var(--accent-soft); }
 .longer > div:first-child { display: grid; gap: 8px; }
 .longer .bar-track { background: var(--surface); }
 @media (max-width: 800px) { .longer { grid-template-columns: 1fr; } }
+.poverty { margin-top: 8px; }
+.poverty h3 { font-size: 1.15rem; }
 .presets { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
 .presets button { border: 1.5px solid var(--line); background: var(--surface); border-radius: 999px; padding: 5px 11px; font-size: .82rem; font-weight: 600; cursor: pointer; }
 .contrib { margin-top: 10px; padding: 10px 12px; background: var(--sunk); border-radius: 10px; font-size: .86rem; line-height: 1.45; }
