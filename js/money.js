@@ -142,70 +142,6 @@
     $("investChart").innerHTML = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Savings growth by age, split into money paid in and growth">${out.join("")}</svg>`;
   }
 
-  // ---------- Rough pension calculator ----------
-  const STATE_PENSION = 230.25 * 52;
-  const pIn = ["pAge", "pRetire", "pSalary", "pRaise", "pYou", "pEmp", "pPot", "pGrowth"];
-  function updatePension() {
-    const v = Object.fromEntries(pIn.map((k) => [k, +$(k).value]));
-    const retire = Math.max(v.pRetire, v.pAge + 1);
-    $("pAgeOut").textContent = v.pAge;
-    $("pRetireOut").textContent = retire;
-    $("pSalaryOut").textContent = gbp(v.pSalary);
-    $("pRaiseOut").textContent = v.pRaise + "%";
-    $("pYouOut").textContent = v.pYou + "%";
-    $("pEmpOut").textContent = v.pEmp + "%";
-    $("pPotOut").textContent = gbp(v.pPot);
-    $("pGrowthOut").textContent = v.pGrowth + "%";
-    let pot = v.pPot, pay = v.pSalary;
-    const r = v.pGrowth / 100, share = (v.pYou + v.pEmp) / 100;
-    const path = [[v.pAge, pot]];
-    for (let age = v.pAge; age < retire; age++) {
-      pot = pot * (1 + r) + pay * share;
-      pay *= 1 + v.pRaise / 100;
-      path.push([age + 1, pot]);
-    }
-    drawPot(path, v.pAge, retire);
-    const totalPct = v.pYou + v.pEmp, perMonth = v.pSalary * totalPct / 100 / 12;
-    $("pContrib").innerHTML = `Total going in: <strong>${totalPct}% of your salary</strong>, about <strong>${gbp(perMonth)} a month</strong> now (you ${gbp(v.pSalary * v.pYou / 1200)}, your employer ${gbp(v.pSalary * v.pEmp / 1200)}). By ${retire} your salary would be about ${gbp(pay)} in today's money.`;
-    // Lifelong-income rate: about 7% at 65, roughly 0.2 points lower or higher per year earlier or later.
-    const rate = Math.max(0.04, 0.07 + (retire - 65) * 0.002);
-    const income = pot * rate;
-    $("pPotLabel").textContent = "Pot at " + retire;
-    $("pPotEnd").textContent = gbp(pot);
-    $("pIncome").textContent = gbp(income);
-    $("pTotal").textContent = gbp(income + STATE_PENSION);
-    const total = income + STATE_PENSION;
-    $("pBar").innerHTML = `<div class="income-track">
-        <span class="seg seg-state" style="width:${(STATE_PENSION / total * 100).toFixed(1)}%"></span>
-        <span class="seg seg-own" style="width:${(income / total * 100).toFixed(1)}%"></span>
-      </div>
-      <div class="inv-legend"><span><i class="sw sw-paid"></i>State Pension ${gbp(STATE_PENSION)}</span><span><i class="sw sw-own"></i>Your own pension ${gbp(income)}</span></div>`;
-    const weekly = total / 52;
-    $("pNote").innerHTML = `That is about <strong>${gbp(weekly)} a week</strong> in today's money. ${v.pYou + v.pEmp < 8 ? "Together you and your employer are paying in less than the legal minimum of 8%." : "Every extra 1% you pay in, especially early on, makes a noticeable difference."}`;
-  }
-  function drawPot(path, start, end) {
-    const W = 560, H = 200, L = 58, R = 16, T = 10, B = 28;
-    const max = Math.max(1000, path[path.length - 1][1]) * 1.08;
-    const x = (age) => L + (age - start) / (end - start) * (W - L - R);
-    const y = (val) => T + (1 - val / max) * (H - T - B);
-    const out = [];
-    const nice = [5000, 10000, 20000, 50000, 100000, 200000, 500000, 1000000];
-    const step = nice.find((n) => max / n <= 4) || 2000000;
-    for (let g = 0; g <= max; g += step) {
-      const lbl = g === 0 ? "£0" : g >= 1000000 ? "£" + g / 1000000 + "m" : "£" + g / 1000 + "k";
-      out.push(`<line class="grid" x1="${L}" x2="${W - R}" y1="${y(g)}" y2="${y(g)}"/><text x="${L - 6}" y="${y(g) + 4}" text-anchor="end">${lbl}</text>`);
-    }
-    const span = end - start, tick = span > 30 ? 10 : span > 12 ? 5 : span > 6 ? 2 : 1;
-    for (let a = start; a <= end; a += tick) out.push(`<text x="${x(a)}" y="${H - 8}" text-anchor="middle">${a}</text>`);
-    if (span % tick) out.push(`<text x="${x(end)}" y="${H - 8}" text-anchor="middle">${end}</text>`);
-    const d = path.map((p) => x(p[0]).toFixed(1) + "," + y(p[1]).toFixed(1)).join(" L");
-    out.push(`<path class="area-growth" d="M${d} L${x(end)},${y(0)} L${x(start)},${y(0)} Z"/><path class="series line-you" d="M${d}"/>`);
-    $("pChart").innerHTML = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Pension pot growing by age until retirement">${out.join("")}</svg>`;
-  }
-
-  pIn.forEach((k) => $(k).addEventListener("input", updatePension));
-  updatePension();
-
   inv.forEach((k) => $(k).addEventListener("input", updateInvest));
   document.querySelectorAll(".presets button").forEach((btn) => btn.addEventListener("click", () => {
     $("invReturn").value = btn.dataset.r;
@@ -231,66 +167,106 @@
     $("payChart").innerHTML = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Line chart: full-time gender pay gap fell from 17.4% in 1997 to 6.9% in 2025">${out.join("")}</svg>`;
   })();
 
-  // ---------- Pension calculator ----------
-  const START = 22, RETIRE = 67, GROWTH = 0.015, RETURN = 0.03, RATE = 0.08, LOW = 6240, HIGH = 50270;
+  // ---------- Pension calculator (with optional career break) ----------
+  const STATE_PENSION = 230.25 * 52;
+  const pIn = ["pAge", "pRetire", "pSalary", "pRaise", "pYou", "pEmp", "pPot", "pGrowth", "breakAge", "breakYears", "ptYears", "ptShare"];
 
-  // Returns the pot at each age from 22 to 67.
-  function simulate(salary, breakAge, breakYears, ptYears, ptShare) {
-    let pot = 0, pay = salary;
-    const path = [];
-    for (let age = START; age < RETIRE; age++) {
-      const onBreak = age >= breakAge && age < breakAge + breakYears;
-      const partTime = age >= breakAge + breakYears && age < breakAge + breakYears + ptYears;
-      const earned = onBreak ? 0 : pay * (partTime ? ptShare : 1);
-      const qualifying = Math.max(0, Math.min(earned, HIGH) - LOW);
-      pot = pot * (1 + RETURN) + qualifying * RATE;
-      path.push([age, pot]);
-      // Pay keeps rising with experience, but not during a break or part-time years
-      // (the IFS found part-time work brings little wage progression).
-      if (!onBreak && !partTime) pay *= 1 + GROWTH;
+  // Pot at each age. Nothing goes in during a break; pay stops rising during the break and part-time years.
+  function pensionPath(v, retire, brk) {
+    let pot = v.pPot, pay = v.pSalary;
+    const r = v.pGrowth / 100, share = (v.pYou + v.pEmp) / 100;
+    const path = [[v.pAge, pot]];
+    for (let age = v.pAge; age < retire; age++) {
+      const off = brk && age >= v.breakAge && age < v.breakAge + v.breakYears;
+      const pt = brk && age >= v.breakAge + v.breakYears && age < v.breakAge + v.breakYears + v.ptYears;
+      const earned = off ? 0 : pay * (pt ? v.ptShare / 100 : 1);
+      pot = pot * (1 + r) + earned * share;
+      if (!off && !pt) pay *= 1 + v.pRaise / 100;
+      path.push([age + 1, pot]);
     }
-    path.push([RETIRE, pot]);
-    return path;
+    return { path, pot, pay };
   }
 
-  const inputs = ["salary", "breakAge", "breakYears", "ptYears", "ptShare"];
-  function update() {
-    const v = Object.fromEntries(inputs.map((k) => [k, +$(k).value]));
-    $("salaryOut").textContent = gbp(v.salary);
+  function updatePension() {
+    const v = Object.fromEntries(pIn.map((k) => [k, +$(k).value]));
+    const retire = Math.max(v.pRetire, v.pAge + 1);
+    // A break can only start after "age now".
+    if (v.breakAge < v.pAge) { v.breakAge = v.pAge; $("breakAge").value = v.pAge; }
+    const brkOn = $("pBreakOn").checked && v.breakYears + v.ptYears > 0;
+    $("breakFields").hidden = !$("pBreakOn").checked;
+    $("pAgeOut").textContent = v.pAge;
+    $("pRetireOut").textContent = retire;
+    $("pSalaryOut").textContent = gbp(v.pSalary);
+    $("pRaiseOut").textContent = v.pRaise + "%";
+    $("pYouOut").textContent = v.pYou + "%";
+    $("pEmpOut").textContent = v.pEmp + "%";
+    $("pPotOut").textContent = gbp(v.pPot);
+    $("pGrowthOut").textContent = v.pGrowth + "%";
     $("breakAgeOut").textContent = v.breakAge;
     $("breakYearsOut").textContent = v.breakYears + (v.breakYears === 1 ? " year" : " years");
     $("ptYearsOut").textContent = v.ptYears + (v.ptYears === 1 ? " year" : " years");
     $("ptShareOut").textContent = v.ptShare + "%";
-    const full = simulate(v.salary, 99, 0, 0, 1);
-    const you = simulate(v.salary, v.breakAge, v.breakYears, v.ptYears, v.ptShare / 100);
-    const a = full[full.length - 1][1], b = you[you.length - 1][1];
-    $("potFull").textContent = gbp(a);
-    $("potYou").textContent = gbp(b);
-    $("potDiff").textContent = a - b >= 1 ? `−${gbp(a - b)} (${Math.round((a - b) / a * 100)}%)` : "£0";
-    drawCalc(full, you, v);
+
+    const full = pensionPath(v, retire, false);
+    const withBreak = brkOn ? pensionPath(v, retire, true) : null;
+    const totalPct = v.pYou + v.pEmp;
+    $("pContrib").innerHTML = `Total going in: <strong>${totalPct}% of your salary</strong>, about <strong>${gbp(v.pSalary * totalPct / 1200)} a month</strong> now (you ${gbp(v.pSalary * v.pYou / 1200)}, your employer ${gbp(v.pSalary * v.pEmp / 1200)}). Without a break, by ${retire} your salary would be about ${gbp(full.pay)} in today's money.`;
+
+    $("pFullLabel").textContent = brkOn ? `Pot at ${retire}, no break` : `Pot at ${retire}`;
+    $("pFull").textContent = gbp(full.pot);
+    $("pBreakFig").hidden = $("pDiffFig").hidden = !brkOn;
+    if (brkOn) {
+      $("pBreak").textContent = gbp(withBreak.pot);
+      const diff = full.pot - withBreak.pot;
+      $("pDiff").textContent = diff >= 1 ? `−${gbp(diff)} (${Math.round(diff / full.pot * 100)}%)` : "£0";
+    }
+    $("pLegend").innerHTML = brkOn
+      ? `<span><i class="sw sw-paid"></i>No break</span><span><i class="sw sw-own"></i>With the career break</span><span><i class="sw sw-band"></i>Break and part-time years</span>`
+      : "";
+    drawPension(full.path, withBreak && withBreak.path, v, retire, brkOn);
+
+    // Income uses the career-break pot when a break is included.
+    const pot = brkOn ? withBreak.pot : full.pot;
+    const rate = Math.max(0.04, 0.07 + (retire - 65) * 0.002);
+    const income = pot * rate, total = income + STATE_PENSION;
+    $("pIncomeTitle").textContent = brkOn ? "Yearly income in retirement, with the break" : "Yearly income in retirement";
+    $("pBar").innerHTML = `<div class="income-track">
+        <span class="seg seg-state" style="width:${(STATE_PENSION / total * 100).toFixed(1)}%"></span>
+        <span class="seg seg-own" style="width:${(income / total * 100).toFixed(1)}%"></span>
+      </div>
+      <div class="inv-legend"><span><i class="sw sw-paid"></i>State Pension ${gbp(STATE_PENSION)}</span><span><i class="sw sw-own"></i>Your own pension ${gbp(income)}</span></div>`;
+    $("pNote").innerHTML = `In total about <strong>${gbp(total)} a year</strong>, or <strong>${gbp(total / 52)} a week</strong>, in today's money. ${totalPct < 8 ? "Together you and your employer are paying in less than the legal minimum of 8%." : "Every extra 1% you pay in, especially early on, makes a noticeable difference."}`;
   }
 
-  function drawCalc(full, you, v) {
-    const W = 560, H = 240, L = 58, R = 16, T = 14, B = 30;
-    const max = Math.max(...full.map((p) => p[1])) * 1.05 || 1;
-    const x = (age) => L + (age - START) / (RETIRE - START) * (W - L - R);
+  function drawPension(full, brk, v, retire, brkOn) {
+    const start = v.pAge, W = 560, H = 220, L = 58, R = 16, T = 10, B = 28;
+    const max = Math.max(1000, full[full.length - 1][1]) * 1.08;
+    const x = (age) => L + (age - start) / (retire - start) * (W - L - R);
     const y = (val) => T + (1 - val / max) * (H - T - B);
     const out = [];
-    const b0 = v.breakAge, b1 = Math.min(RETIRE, v.breakAge + v.breakYears + v.ptYears);
-    if (b1 > b0) out.push(`<rect class="break-band" x="${x(b0)}" y="${T}" width="${x(b1) - x(b0)}" height="${H - T - B}"/>`);
-    const step = max > 300000 ? 100000 : max > 120000 ? 50000 : 25000;
-    for (let g = 0; g <= max; g += step) {
-      out.push(`<line class="grid" x1="${L}" x2="${W - R}" y1="${y(g)}" y2="${y(g)}"/><text x="${L - 6}" y="${y(g) + 4}" text-anchor="end">${g === 0 ? "£0" : "£" + g / 1000 + "k"}</text>`);
+    if (brkOn) {
+      const b0 = Math.max(start, v.breakAge), b1 = Math.min(retire, v.breakAge + v.breakYears + v.ptYears);
+      if (b1 > b0) out.push(`<rect class="break-band" x="${x(b0)}" y="${T}" width="${x(b1) - x(b0)}" height="${H - T - B}"/>`);
     }
-    [22, 30, 40, 50, 60, 67].forEach((age) => out.push(`<text x="${x(age)}" y="${H - 8}" text-anchor="middle">${age}</text>`));
-    const line = (p) => "M" + p.map((q) => x(q[0]).toFixed(1) + "," + y(q[1]).toFixed(1)).join(" L");
-    out.push(`<path class="series line-full" d="${line(full)}"/><path class="series line-you" d="${line(you)}"/>`);
-    out.push(`<text class="lg" x="${L + 8}" y="${T + 12}" style="fill:var(--men)">— No break</text>`);
-    out.push(`<text class="lg" x="${L + 8}" y="${T + 28}" style="fill:var(--women)">— With your choices</text>`);
-    if (b1 > b0) out.push(`<text x="${(x(b0) + x(b1)) / 2}" y="${H - B - 6}" text-anchor="middle">break + part time</text>`);
-    $("calcChart").innerHTML = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Pension pot by age, with and without a career break">${out.join("")}</svg>`;
+    const nice = [5000, 10000, 20000, 50000, 100000, 200000, 500000, 1000000];
+    const step = nice.find((n) => max / n <= 4) || 2000000;
+    for (let g = 0; g <= max; g += step) {
+      const lbl = g === 0 ? "£0" : g >= 1000000 ? "£" + g / 1000000 + "m" : "£" + g / 1000 + "k";
+      out.push(`<line class="grid" x1="${L}" x2="${W - R}" y1="${y(g)}" y2="${y(g)}"/><text x="${L - 6}" y="${y(g) + 4}" text-anchor="end">${lbl}</text>`);
+    }
+    const span = retire - start, tick = span > 30 ? 10 : span > 12 ? 5 : span > 6 ? 2 : 1;
+    for (let a = start; a <= retire - tick / 2; a += tick) out.push(`<text x="${x(a)}" y="${H - 8}" text-anchor="middle">${a}</text>`);
+    out.push(`<text x="${x(retire)}" y="${H - 8}" text-anchor="middle">${retire}</text>`);
+    const line = (p) => p.map((q) => x(q[0]).toFixed(1) + "," + y(q[1]).toFixed(1)).join(" L");
+    if (brkOn) {
+      out.push(`<path class="series line-full" d="M${line(full)}"/><path class="series line-you" d="M${line(brk)}"/>`);
+    } else {
+      out.push(`<path class="area-growth" d="M${line(full)} L${x(retire)},${y(0)} L${x(start)},${y(0)} Z"/><path class="series line-you" d="M${line(full)}"/>`);
+    }
+    $("pChart").innerHTML = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Pension pot by age${brkOn ? ", with and without a career break" : ""}">${out.join("")}</svg>`;
   }
 
-  inputs.forEach((k) => $(k).addEventListener("input", update));
-  update();
+  pIn.forEach((k) => $(k).addEventListener("input", updatePension));
+  $("pBreakOn").addEventListener("change", updatePension);
+  updatePension();
 })();
