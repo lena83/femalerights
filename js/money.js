@@ -142,6 +142,67 @@
     $("investChart").innerHTML = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Savings growth by age, split into money paid in and growth">${out.join("")}</svg>`;
   }
 
+  // ---------- Rough pension calculator ----------
+  const STATE_PENSION = 230.25 * 52;
+  const pIn = ["pAge", "pRetire", "pSalary", "pYou", "pEmp", "pPot", "pGrowth"];
+  function updatePension() {
+    const v = Object.fromEntries(pIn.map((k) => [k, +$(k).value]));
+    const retire = Math.max(v.pRetire, v.pAge + 1);
+    $("pAgeOut").textContent = v.pAge;
+    $("pRetireOut").textContent = retire;
+    $("pSalaryOut").textContent = gbp(v.pSalary);
+    $("pYouOut").textContent = v.pYou + "%";
+    $("pEmpOut").textContent = v.pEmp + "%";
+    $("pPotOut").textContent = gbp(v.pPot);
+    $("pGrowthOut").textContent = v.pGrowth + "%";
+    let pot = v.pPot, pay = v.pSalary;
+    const r = v.pGrowth / 100, share = (v.pYou + v.pEmp) / 100;
+    const path = [[v.pAge, pot]];
+    for (let age = v.pAge; age < retire; age++) {
+      pot = pot * (1 + r) + pay * share;
+      pay *= 1.015;
+      path.push([age + 1, pot]);
+    }
+    drawPot(path, v.pAge, retire);
+    // Lifelong-income rate: about 7% at 65, roughly 0.2 points lower or higher per year earlier or later.
+    const rate = Math.max(0.04, 0.07 + (retire - 65) * 0.002);
+    const income = pot * rate;
+    $("pPotLabel").textContent = "Pot at " + retire;
+    $("pPotEnd").textContent = gbp(pot);
+    $("pIncome").textContent = gbp(income);
+    $("pTotal").textContent = gbp(income + STATE_PENSION);
+    const total = income + STATE_PENSION;
+    $("pBar").innerHTML = `<div class="income-track">
+        <span class="seg seg-state" style="width:${(STATE_PENSION / total * 100).toFixed(1)}%"></span>
+        <span class="seg seg-own" style="width:${(income / total * 100).toFixed(1)}%"></span>
+      </div>
+      <div class="inv-legend"><span><i class="sw sw-paid"></i>State Pension ${gbp(STATE_PENSION)}</span><span><i class="sw sw-own"></i>Your own pension ${gbp(income)}</span></div>`;
+    const weekly = total / 52;
+    $("pNote").innerHTML = `That is about <strong>${gbp(weekly)} a week</strong> in today's money. ${v.pYou + v.pEmp < 8 ? "Together you and your employer are paying in less than the legal minimum of 8%." : "Every extra 1% you pay in, especially early on, makes a noticeable difference."}`;
+  }
+  function drawPot(path, start, end) {
+    const W = 560, H = 200, L = 58, R = 16, T = 10, B = 28;
+    const max = Math.max(1000, path[path.length - 1][1]) * 1.08;
+    const x = (age) => L + (age - start) / (end - start) * (W - L - R);
+    const y = (val) => T + (1 - val / max) * (H - T - B);
+    const out = [];
+    const nice = [5000, 10000, 20000, 50000, 100000, 200000, 500000, 1000000];
+    const step = nice.find((n) => max / n <= 4) || 2000000;
+    for (let g = 0; g <= max; g += step) {
+      const lbl = g === 0 ? "£0" : g >= 1000000 ? "£" + g / 1000000 + "m" : "£" + g / 1000 + "k";
+      out.push(`<line class="grid" x1="${L}" x2="${W - R}" y1="${y(g)}" y2="${y(g)}"/><text x="${L - 6}" y="${y(g) + 4}" text-anchor="end">${lbl}</text>`);
+    }
+    const span = end - start, tick = span > 30 ? 10 : span > 12 ? 5 : span > 6 ? 2 : 1;
+    for (let a = start; a <= end; a += tick) out.push(`<text x="${x(a)}" y="${H - 8}" text-anchor="middle">${a}</text>`);
+    if (span % tick) out.push(`<text x="${x(end)}" y="${H - 8}" text-anchor="middle">${end}</text>`);
+    const d = path.map((p) => x(p[0]).toFixed(1) + "," + y(p[1]).toFixed(1)).join(" L");
+    out.push(`<path class="area-growth" d="M${d} L${x(end)},${y(0)} L${x(start)},${y(0)} Z"/><path class="series line-you" d="M${d}"/>`);
+    $("pChart").innerHTML = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Pension pot growing by age until retirement">${out.join("")}</svg>`;
+  }
+
+  pIn.forEach((k) => $(k).addEventListener("input", updatePension));
+  updatePension();
+
   inv.forEach((k) => $(k).addEventListener("input", updateInvest));
   document.querySelectorAll(".presets button").forEach((btn) => btn.addEventListener("click", () => {
     $("invReturn").value = btn.dataset.r;

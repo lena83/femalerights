@@ -126,6 +126,45 @@
     </div>
     <p class="chart-note">A simple illustration: it divides each pot by the years of life expected at 65 and ignores investment growth, inflation and how pensions are actually paid out.</p>
 
+    <div class="calc" id="pcalc">
+      <div class="calc-head">
+        <h3>Try it: roughly how big could your pension be?</h3>
+        <p>Enter your salary and how much you and your employer pay in. The calculator estimates your pension pot at retirement and the yearly income it might give you, on top of the State Pension.</p>
+      </div>
+      <div class="calc-body">
+        <form class="calc-inputs" id="pForm">
+          <label for="pAge">Your age now <output id="pAgeOut"></output></label>
+          <input type="range" id="pAge" min="18" max="60" step="1" value="22">
+          <label for="pRetire">Retire at <output id="pRetireOut"></output></label>
+          <input type="range" id="pRetire" min="55" max="75" step="1" value="67">
+          <label for="pSalary">Salary a year <output id="pSalaryOut"></output></label>
+          <input type="range" id="pSalary" min="10000" max="120000" step="1000" value="28000">
+          <label for="pYou">You pay in <output id="pYouOut"></output></label>
+          <input type="range" id="pYou" min="0" max="20" step="1" value="5">
+          <label for="pEmp">Your employer pays in <output id="pEmpOut"></output></label>
+          <input type="range" id="pEmp" min="0" max="15" step="1" value="3">
+          <label for="pPot">Pension saved so far <output id="pPotOut"></output></label>
+          <input type="range" id="pPot" min="0" max="200000" step="1000" value="0">
+          <label for="pGrowth">Average growth a year <output id="pGrowthOut"></output></label>
+          <input type="range" id="pGrowth" min="0" max="7" step="0.5" value="3">
+        </form>
+        <div class="calc-out">
+          <div class="calc-figs">
+            <div><span class="fig-label" id="pPotLabel">Pot at 67</span><span class="fig-num accent" id="pPotEnd"></span></div>
+            <div><span class="fig-label">Income from it, a year</span><span class="fig-num" id="pIncome"></span></div>
+            <div><span class="fig-label">With full State Pension</span><span class="fig-num" id="pTotal"></span></div>
+          </div>
+          <div id="pChart"></div>
+          <div class="income-bar" id="pBar"></div>
+          <p class="late" id="pNote"></p>
+        </div>
+      </div>
+      <details class="assumptions">
+        <summary>How this is worked out</summary>
+        <p>A rough estimate in today's money, not financial advice. Contributions are a percentage of your whole salary (the legal minimum is 8% in total, with at least 3% from your employer, on earnings between £6,240 and £50,270). Your salary rises 1.5% a year above inflation. The pot is turned into a yearly income at about 7% a year if you retire at 65, a typical rate for a lifelong income (annuity) in 2025; the rate is lower if you retire earlier and higher if later. The full new State Pension is £230.25 a week in 2025–26, about £11,970 a year, and needs 35 years of National Insurance. It is only paid from State Pension age (currently 66, rising to 67 from 2026–28).</p>
+      </details>
+    </div>
+
     <div class="calc" id="calc">
       <div class="calc-head">
         <h3>Try it: what does a career break do to a pension?</h3>
