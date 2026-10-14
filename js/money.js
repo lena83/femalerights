@@ -137,9 +137,9 @@
 
   const inv = ["invStart", "invEnd", "invInitial", "invMonthly", "invReturn"];
   const PRESET_NOTES = {
-    1: "<b>Cash savings:</b> a savings account or Cash ISA. Your money can't fall in value, but it usually grows only a little faster than prices.",
-    3: "<b>Mixed fund:</b> a fund holding both shares and bonds (loans to governments and companies). It usually rises and falls less than shares alone.",
-    5: "<b>Global index ETF:</b> an exchange-traded fund that follows an index of thousands of companies around the world, such as the MSCI World or FTSE All-World. You can hold one in a Stocks and Shares ISA or a pension. Fees are usually low, but its value can drop sharply in a bad year."
+    1: "<b>Cash savings:</b> a savings account or Cash ISA. Your money can't fall in value, but it usually grows only a little faster than prices. Since 1900, cash has averaged about 0.5% a year above inflation.",
+    3: "<b>Mixed fund:</b> a fund holding both shares and bonds (loans to governments and companies). It usually rises and falls less than shares alone. Since 1900, bonds have averaged 1.7% a year above inflation and shares 5.2%.",
+    5: "<b>Global index ETF:</b> an exchange-traded fund that follows an index of thousands of companies around the world, such as the MSCI World or FTSE All-World. You can hold one in a Stocks and Shares ISA or a pension. Fees are usually low, but its value can drop sharply in a bad year. <b>Why 5% and not 8%?</b> You often see 8% or more quoted, but that is before inflation. World shares averaged 5.2% a year <em>above</em> inflation from 1900 to 2024, and about 3.5% so far this century."
   };
   function updateInvest() {
     let start = +$("invStart").value, end = +$("invEnd").value;
@@ -150,7 +150,7 @@
     $("invInitialOut").textContent = gbp(initial);
     $("invMonthlyOut").textContent = gbp(monthly);
     $("presetNote").innerHTML = PRESET_NOTES[+$("invReturn").value] || "A return you chose. Try the buttons above to compare cash, a mixed fund and a global ETF.";
-    $("invReturnOut").textContent = $("invReturn").value + "%";
+    $("invReturnOut").textContent = $("invReturn").value + "% above inflation";
     document.querySelectorAll(".presets button").forEach((btn) => btn.setAttribute("aria-pressed", String(+btn.dataset.r === +$("invReturn").value)));
     const path = grow(start, end, initial, monthly, rate);
     const [, total, paid] = path[path.length - 1];

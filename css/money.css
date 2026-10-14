@@ -111,6 +111,7 @@ details.calc > .calc-head:hover .calc-toggle { background: var(--accent-soft); }
 .seg-state { background: var(--men); }
 .seg-own { background: var(--accent); }
 .sw-own { background: var(--accent); }
+.preset-cap { font-size: .8rem; color: var(--muted); margin: 8px 0 0; }
 .preset-note { font-size: .84rem; color: var(--muted); margin-top: 6px; line-height: 1.45; }
 .preset-note b { color: var(--ink); }
 .presets button:hover { border-color: var(--accent); }
